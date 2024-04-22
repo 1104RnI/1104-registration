@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react'
+import { ChangeEvent } from 'react'
 
 import { useUserDataStore } from '../../store/dataStore'
 
@@ -36,7 +36,7 @@ export default function BirthSelector() {
 				value={birth.year}
 				handleChange={handleChange}
 				placeholder="태어난 년도 선택"
-				isValid
+				// isValid
 				options={yearOptions}
 				unit="년"
 			/>
@@ -45,7 +45,7 @@ export default function BirthSelector() {
 				value={birth.month}
 				handleChange={handleChange}
 				placeholder="태어난 달 선택"
-				isValid
+				// isValid
 				options={monthOptions}
 				unit="월"
 			/>

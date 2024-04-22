@@ -9,15 +9,14 @@ type SelectProps = {
 	name?: string
 	value?: string
 	placeholder?: string
-	isValid: boolean
+	// isValid: boolean
 	options?: number[]
 	unit?: string
 	handleChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
 export default function Selector(props: SelectProps) {
-	const { name, value, placeholder, isValid, options, handleChange, unit } =
-		props
+	const { name, value, placeholder, options, handleChange, unit } = props
 
 	const [isFocused, setIsFocused] = useState<boolean>(false)
 
