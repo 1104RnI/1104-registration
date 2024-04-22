@@ -12,6 +12,7 @@ import { EmailCheckContainer } from './email-check.styles'
 export default function EmailCheck() {
 	const [email, setEmail] = useState<string>('')
 	const [isValid, setIsValid] = useState<boolean>(false)
+
 	const forwardProgress = useProgressStore(
 		(state: RegistrationProgress) => state.forwardProgress,
 	)
@@ -26,6 +27,8 @@ export default function EmailCheck() {
 		e.preventDefault()
 		if (isValid) {
 			// Server Communication comes here later
+			// ...
+			// ...
 			forwardProgress()
 			console.log('valid email: ', email)
 		} else {
@@ -43,7 +46,7 @@ export default function EmailCheck() {
 			<TextArea
 				title="가입 이메일 확인"
 				text={[
-					'1104.kr 웹사이트에서 회원가입에 사용한 이메일을 입력해 주세요.',
+					'가입 여부 확인을 위해 1104.kr 웹사이트에서 회원가입에 사용한 이메일을 입력해 주세요.',
 				]}
 			/>
 
