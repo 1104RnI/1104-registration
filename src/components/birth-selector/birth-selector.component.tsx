@@ -18,7 +18,7 @@ export default function BirthSelector() {
 
 	const yearOptions = Array.from(
 		{ length: endYear - startYear + 1 },
-		(_, index) => startYear + index,
+		(_, index) => endYear - index,
 	)
 	const monthOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 
