@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 
-import { useProgressStore, RegistrationProgress } from '../../store/dataStore'
+import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
 
 import Input from '../input/input.component'
 import Button from '../button/button.component'
@@ -14,7 +14,7 @@ export default function EmailCheck() {
 	const [isValid, setIsValid] = useState<boolean>(false)
 
 	const forwardProgress = useProgressStore(
-		(state: RegistrationProgress) => state.forwardProgress,
+		(state: ProgressAtcion) => state.forwardProgress,
 	)
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {

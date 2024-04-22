@@ -3,7 +3,7 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 // import { useProgressStore, RegistrationProgress } from '../../store/dataStore'
 
 import Input from '../input/input.component'
-import YearSelector from '../year-selector/year-selector.component'
+import BirthSelector from '../birth-selector/birth-selector.component'
 import Button from '../button/button.component'
 import TextArea from '../text-area/text-area.component'
 import WarningMessage from '../warning-message/warning-message.component'
@@ -118,7 +118,7 @@ export default function PersonalInfoInputs() {
 						isValid={personalInfo.tel.length === 0 || isValid.isTelValid}
 						handleChange={handleInputChange}
 					/>
-					<YearSelector />
+					<BirthSelector />
 				</div>
 				<Button
 					text="입력 완료"

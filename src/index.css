@@ -3,9 +3,9 @@
 body {
 	width: 100%;
 
-	/* display: flex;
-	justify-content: center; */
-	/* align-items: center; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	min-width: 20rem;
 	min-height: 100vh;
