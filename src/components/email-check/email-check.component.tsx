@@ -48,6 +48,7 @@ export default function EmailCheck() {
 						type="email"
 						value={email}
 						placeholder="abc@gmail.com"
+						isValid={email.length === 0 || isValid}
 						handleChange={handleEmailChange}
 					/>
 				</div>

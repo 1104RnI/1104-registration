@@ -1,6 +1,11 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const InputContainer = styled.input<{ $isFocused: boolean }>`
+type InputContainerProps = {
+	$isFocused: boolean
+	$isValid: boolean
+}
+
+export const InputContainer = styled.input<InputContainerProps>`
 	&::-ms-clear,
 	&::-ms-reveal {
 		display: none;
@@ -26,8 +31,24 @@ export const InputContainer = styled.input<{ $isFocused: boolean }>`
 
 	background-color: #fff;
 
-	border: ${(props) =>
-		props.$isFocused ? '0.125rem solid #000000' : '0.125rem solid #e9e9e9'};
+	${(props) =>
+		props.$isFocused &&
+		(props.$isValid
+			? css`
+					border: 0.125rem solid #000000;
+			  `
+			: css`
+					border: 0.125rem solid red;
+			  `)}
+	${(props) =>
+		!props.$isFocused &&
+		(props.$isValid
+			? css`
+					border: 0.125rem solid #e9e9e9;
+			  `
+			: css`
+					border: 0.125rem solid rgba(255, 0, 0, 0.25);
+			  `)}
 
 	border-radius: 1rem;
 
