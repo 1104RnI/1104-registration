@@ -3,6 +3,7 @@ import { useState, ChangeEvent, FocusEvent } from 'react'
 import { InputContainer } from './input.styles'
 
 type InputProps = {
+	name?: string
 	type?: string
 	value?: string | number
 	placeholder?: string
@@ -11,7 +12,7 @@ type InputProps = {
 }
 
 export default function Input(props: InputProps) {
-	const { type, value, placeholder, isValid, handleChange } = props
+	const { name, type, value, placeholder, isValid, handleChange } = props
 
 	const [isFocused, setIsFocused] = useState<boolean>(false)
 
@@ -21,6 +22,7 @@ export default function Input(props: InputProps) {
 	return (
 		<InputContainer
 			type={type}
+			name={name}
 			value={value}
 			onFocus={handleFocus}
 			onBlur={handleBlur}

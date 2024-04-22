@@ -3,7 +3,7 @@ import { create } from 'zustand'
 export type PersonalInfo = {
 	name: string
 	tel: string
-	birth: string
+	birth: { year: string; month: string }
 }
 
 export type Exchange = 'bybit' | 'binance' | 'bitget' | 'okx' | 'others' | ''
@@ -16,16 +16,28 @@ export interface UserDataState {
 }
 
 type UserDataAction = {
-	updatePersonalInfo: (personalInof: UserDataState['personalInfo']) => void
+	updatePersonalInfo: (field: string, value: string) => void
+	updatePersonalInfoBirth: (field: string, value: string) => void
 }
 
 export const useUserDataStore = create<UserDataState & UserDataAction>(
 	(set) => ({
-		personalInfo: { name: '', tel: '', birth: '' },
+		personalInfo: { name: '', tel: '', birth: { year: '', month: '' } },
 		tradingViewID: '',
 		exchange: '',
 		uid: '',
-		updatePersonalInfo: (personalInfo) =>
-			set(() => ({ personalInfo: personalInfo })),
+		updatePersonalInfo: (field, value) =>
+			set((state) => ({
+				...state,
+				personalInfo: { ...state.personalInfo, [field]: value },
+			})),
+		updatePersonalInfoBirth: (field, value) =>
+			set((state) => ({
+				...state,
+				personalInfo: {
+					...state.personalInfo,
+					birth: { ...state.personalInfo.birth, [field]: value },
+				},
+			})),
 	}),
 )

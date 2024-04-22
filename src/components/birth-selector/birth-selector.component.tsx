@@ -1,8 +1,17 @@
 import { useState, ChangeEvent } from 'react'
 
-import Select from '../select/select.component'
+import { useUserDataStore } from '../../store/dataStore'
+
+import { BirthSelectorContainer } from './birth-selector.styles'
+
+import Select from '../selector/selector.component'
 
 export default function BirthSelector() {
+	const birth = useUserDataStore((state) => state.personalInfo.birth)
+	const updatePersonalInfoBirth = useUserDataStore(
+		(state) => state.updatePersonalInfoBirth,
+	)
+
 	const currentYear = new Date().getFullYear()
 	const startYear = currentYear - 90
 	const endYear = currentYear - 19
@@ -13,40 +22,33 @@ export default function BirthSelector() {
 	)
 	const monthOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 
-	const handleYearChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		// setSelectedYear(e.target.value)
+	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+		const selectValue = e.target.value
+		const selectName = e.target.name
+
+		updatePersonalInfoBirth(selectName, selectValue)
 	}
 
 	return (
-		<div>
+		<BirthSelectorContainer>
 			<Select
-				placeholder="태어난 년도"
+				name="year"
+				value={birth.year}
+				handleChange={handleChange}
+				placeholder="태어난 년도 선택"
 				isValid
 				options={yearOptions}
 				unit="년"
 			/>
 			<Select
-				placeholder="태어난 달"
+				name="month"
+				value={birth.month}
+				handleChange={handleChange}
+				placeholder="태어난 달 선택"
 				isValid
 				options={monthOptions}
 				unit="월"
 			/>
-			{/* <select value={selectedYear} onChange={handleYearChange}>
-				<option value="">태어난 년도</option>
-				{yearOptions.map((year) => (
-					<option key={year} value={year}>
-						{year}년
-					</option>
-				))}
-			</select>
-			<select value={selectedYear} onChange={handleYearChange}>
-				<option value="">태어난 달</option>
-				{monthOptions.map((month) => (
-					<option key={month} value={String(month).padStart(2, '0')}>
-						{month}월
-					</option>
-				))}
-			</select> */}
-		</div>
+		</BirthSelectorContainer>
 	)
 }

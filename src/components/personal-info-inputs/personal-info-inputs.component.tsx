@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 
-// import { useProgressStore, RegistrationProgress } from '../../store/dataStore'
+import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
+import { useUserDataStore } from '../../store/dataStore'
 
 import Input from '../input/input.component'
 import BirthSelector from '../birth-selector/birth-selector.component'
@@ -10,21 +11,20 @@ import WarningMessage from '../warning-message/warning-message.component'
 
 import { PersonalInfoInputsContainer } from './personal-info-inputs.styles'
 
-type PersonalInfo = {
-	name: string
-	tel: string
-}
-
 type InputValidity = {
 	isNameValid: boolean
 	isTelValid: boolean
 }
 
 export default function PersonalInfoInputs() {
-	const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
-		name: '',
-		tel: '',
-	})
+	const personalInfo = useUserDataStore((state) => state.personalInfo)
+	const updatePersonalInfo = useUserDataStore(
+		(state) => state.updatePersonalInfo,
+	)
+	const forwardProgress = useProgressStore(
+		(state: ProgressAtcion) => state.forwardProgress,
+	)
+
 	const [isValid, setIsValid] = useState<InputValidity>({
 		isNameValid: false,
 		isTelValid: false,
@@ -32,22 +32,22 @@ export default function PersonalInfoInputs() {
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
-		const inputType = e.target.type
+		const inputName = e.target.name
 
-		if (inputType === 'text') {
-			setPersonalInfo((prevState) => ({ ...prevState, name: inputValue }))
+		if (inputName === 'name') {
+			updatePersonalInfo(inputName, inputValue)
 			setIsValid((prevState) => ({
 				...prevState,
-				isNameValid: validateInput(inputType, inputValue),
+				isNameValid: validateInput(inputName, inputValue),
 			}))
-		} else if (inputType === 'tel') {
+		} else if (inputName === 'tel') {
 			const numericValue = inputValue.replace(/\D/g, '')
 			const formattedValue = formatTelNumber(numericValue)
 
-			setPersonalInfo((prevState) => ({ ...prevState, tel: formattedValue }))
+			updatePersonalInfo('tel', formattedValue)
 			setIsValid((prevState) => ({
 				...prevState,
-				isTelValid: validateInput(inputType, formattedValue),
+				isTelValid: validateInput(inputName, formattedValue),
 			}))
 		} else console.log('input type error')
 	}
@@ -69,7 +69,7 @@ export default function PersonalInfoInputs() {
 		const nameRegex = /^[가-힣]{2,4}$/
 		const telRegex = /^01[0-9]-\d{4}-\d{4}$/
 
-		if (type === 'text') {
+		if (type === 'name') {
 			return nameRegex.test(value)
 		} else if (type === 'tel') {
 			return telRegex.test(value)
@@ -84,9 +84,28 @@ export default function PersonalInfoInputs() {
 		} else return false
 	}
 
+	const isAllValid = (): boolean => {
+		const birth = personalInfo.birth
+
+		if (
+			isValid.isNameValid &&
+			isValid.isTelValid &&
+			birth.month.length !== 0 &&
+			birth.year.length !== 0
+		) {
+			return true
+		} else return false
+	}
+
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		console.log(personalInfo)
+
+		if (isAllValid()) {
+			forwardProgress()
+			console.log(personalInfo)
+		} else {
+			alert('Invalid Personal Info')
+		}
 	}
 
 	return (
@@ -105,6 +124,7 @@ export default function PersonalInfoInputs() {
 						<WarningMessage text="입력하신 이름, 또는 핸드폰 번호가 올바르지 않습니다." />
 					) : null}
 					<Input
+						name="name"
 						type="text"
 						value={personalInfo.name}
 						placeholder="4자 이내 본명을 입력해 주세요."
@@ -112,6 +132,7 @@ export default function PersonalInfoInputs() {
 						handleChange={handleInputChange}
 					/>
 					<Input
+						name="tel"
 						type="tel"
 						value={personalInfo.tel}
 						placeholder="핸드폰 번호를 -없이 숫자만 입력해 주세요."
@@ -124,7 +145,7 @@ export default function PersonalInfoInputs() {
 					text="입력 완료"
 					appearance="neutral"
 					hierarchy="primary"
-					disabled={!isValid.isNameValid || !isValid.isTelValid}
+					disabled={!isAllValid()}
 				/>
 			</label>
 		</PersonalInfoInputsContainer>
