@@ -25,7 +25,7 @@ export default function Input(props: InputProps) {
 			onBlur={handleBlur}
 			onChange={handleChange}
 			placeholder={placeholder}
-			isFocused={isFocused}
+			$isFocused={isFocused}
 		/>
 	)
 }

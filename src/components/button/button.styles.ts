@@ -2,10 +2,12 @@ import styled, { css } from 'styled-components'
 
 import { ButtonAppearance, ButtonHierarchy } from './button.component'
 
-export const ButtonContainer = styled.button<{
-	appearance: ButtonAppearance
-	hierarchy: ButtonHierarchy
-}>`
+type ButtonContainerProps = {
+	$appearance: ButtonAppearance
+	$hierarchy: ButtonHierarchy
+}
+
+export const ButtonContainer = styled.button<ButtonContainerProps>`
 	all: unset;
 	cursor: pointer;
 
@@ -24,35 +26,35 @@ export const ButtonContainer = styled.button<{
 	user-select: none;
 
 	${(props) =>
-		props.appearance === 'neutral' &&
+		props.$appearance === 'neutral' &&
 		css`
 			background-color: #0b0b0b;
 		`}
 
 	span {
 		${(props) =>
-			props.appearance === 'accent' &&
+			props.$appearance === 'accent' &&
 			css`
 				color: #000000;
 			`}
 		${(props) =>
-			props.appearance === 'neutral' &&
+			props.$appearance === 'neutral' &&
 			css`
 				color: #ffffff;
 			`}
       ${(props) =>
-			props.appearance === 'system' &&
+			props.$appearance === 'system' &&
 			css`
 				color: #ff5656;
 			`}
     
     ${(props) =>
-			props.hierarchy === 'primary' &&
+			props.$hierarchy === 'primary' &&
 			css`
 				font-weight: bold;
 			`}
     ${(props) =>
-			props.hierarchy === 'secondary' &&
+			props.$hierarchy === 'secondary' &&
 			css`
 				font-weight: normal;
 			`}
@@ -60,7 +62,7 @@ export const ButtonContainer = styled.button<{
 
 	&:active {
 		${(props) =>
-			props.appearance === 'neutral'
+			props.$appearance === 'neutral'
 				? css`
 						background-color: #2b2b2b;
 						color: #b6b6b6;

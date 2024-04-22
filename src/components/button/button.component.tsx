@@ -19,8 +19,8 @@ export default function Button(props: ButtonProps) {
 
 	return (
 		<ButtonContainer
-			appearance={appearance}
-			hierarchy={hierarchy}
+			$appearance={appearance}
+			$hierarchy={hierarchy}
 			onClick={handleClick}
 			disabled={disabled}
 		>

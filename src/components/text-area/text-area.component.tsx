@@ -11,7 +11,7 @@ export default function TextArea(props: TextAreaProps) {
 	return (
 		<TextAreaContainer>
 			{title ? <h1>{title}</h1> : null}{' '}
-			{text ? text.map((item, index) => <p>{item}</p>) : null}
+			{text ? text.map((item, index) => <p key={index}>{item}</p>) : null}
 		</TextAreaContainer>
 	)
 }
