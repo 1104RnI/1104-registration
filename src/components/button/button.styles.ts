@@ -74,5 +74,6 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
 
 	&:disabled {
 		opacity: 0.25;
+		pointer-events: none;
 	}
 `
