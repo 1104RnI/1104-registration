@@ -1,4 +1,25 @@
 .App {
 	width: 100%;
+	height: 100vh;
 	text-align: center;
+
+	display: flex;
+	flex-direction: column;
+
+	justify-content: flex-start;
+	align-items: center;
+
+	div#body-container {
+		width: 100%;
+		height: 100%;
+		max-width: 37.5rem;
+
+		display: flex;
+		flex-direction: column;
+
+		justify-content: center;
+		align-items: center;
+
+		padding: 1.5rem;
+	}
 }

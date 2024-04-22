@@ -3,6 +3,7 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 import Input from '../input/input.component'
 import Button from '../button/button.component'
 import TextArea from '../text-area/text-area.component'
+import WarningMessage from '../warning-message/warning-message.component'
 
 import { EmailCheckContainer } from './email-check.styles'
 
@@ -36,13 +37,26 @@ export default function EmailCheck() {
 			/>
 
 			<label>
-				<Input
-					type="email"
-					value={email}
-					placeholder="abc@gmail.com"
-					handleChange={handleEmailChange}
+				<div id="input-container">
+					{!isValid && email.length !== 0 ? (
+						<WarningMessage
+							text="이메일 형식이 올바르지 않습니다. 이메일 양식(abc@email.com)을
+							확인해 주세요."
+						/>
+					) : null}
+					<Input
+						type="email"
+						value={email}
+						placeholder="abc@gmail.com"
+						handleChange={handleEmailChange}
+					/>
+				</div>
+				<Button
+					text="입력 완료"
+					appearance="neutral"
+					hierarchy="primary"
+					disabled={!isValid}
 				/>
-				<Button text="Submit" appearance="neutral" hierarchy="primary" />
 			</label>
 		</EmailCheckContainer>
 	)

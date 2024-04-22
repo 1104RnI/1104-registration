@@ -1,9 +1,5 @@
 import styled from 'styled-components'
 
-// type InputContainerProps = {
-// 	$isFocused: boolean
-// }
-
 export const InputContainer = styled.input<{ $isFocused: boolean }>`
 	&::-ms-clear,
 	&::-ms-reveal {
