@@ -1,13 +1,13 @@
+import { useProgressStore, RegistrationProgress } from '../../store/dataStore'
+
 import { ProgressIndicatorContainer } from './progress-indicator.styles'
 
 import IndicatorQueue from '../indicator-queue/indicator-queue.component'
 
-type ProgressIndicatorProps = {
-	progress: number
-}
-
-export default function ProgressIndicator(props: ProgressIndicatorProps) {
-	const { progress } = props
+export default function ProgressIndicator() {
+	const progress = useProgressStore(
+		(state: RegistrationProgress) => state.progress,
+	)
 
 	return (
 		<ProgressIndicatorContainer>

@@ -1,5 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 
+import { useProgressStore, RegistrationProgress } from '../../store/dataStore'
+
 import Input from '../input/input.component'
 import Button from '../button/button.component'
 import TextArea from '../text-area/text-area.component'
@@ -10,6 +12,9 @@ import { EmailCheckContainer } from './email-check.styles'
 export default function EmailCheck() {
 	const [email, setEmail] = useState<string>('')
 	const [isValid, setIsValid] = useState<boolean>(false)
+	const forwardProgress = useProgressStore(
+		(state: RegistrationProgress) => state.forwardProgress,
+	)
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputEmail = e.target.value
@@ -19,7 +24,13 @@ export default function EmailCheck() {
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		isValid ? console.log('valid email: ', email) : alert('Invalid Email Text')
+		if (isValid) {
+			// Server Communication comes here later
+			forwardProgress()
+			console.log('valid email: ', email)
+		} else {
+			alert('Invalid Email Text')
+		}
 	}
 
 	const validateEmail = (email: string): boolean => {
