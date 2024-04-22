@@ -34,4 +34,5 @@ export const IndicatorQueueContainer = styled.div<IndicatorQueueContainerProps>`
 
 	color: white;
 	font-weight: 900;
+	text-align: center;
 `
