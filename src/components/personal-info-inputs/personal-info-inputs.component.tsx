@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 
-import { useProgressStore, RegistrationProgress } from '../../store/dataStore'
+// import { useProgressStore, RegistrationProgress } from '../../store/dataStore'
 
 import Input from '../input/input.component'
 import YearSelector from '../year-selector/year-selector.component'
