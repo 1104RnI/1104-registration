@@ -15,7 +15,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	gap: 0.25rem;
+	gap: 0.5rem;
 
 	padding: 1rem 1.25rem;
 	border-radius: 0.75rem;
