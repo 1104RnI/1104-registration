@@ -11,6 +11,7 @@ export interface UserDataState {
 	tradingViewId: string
 	exchange: string
 	uid: string
+	assetManagement: string
 }
 
 export interface ExchangeDataState {
@@ -29,6 +30,7 @@ export const useUserDataStore = create<UserDataState & UserDataAction>(
 		tradingViewId: '',
 		exchange: '',
 		uid: '',
+		assetManagement: '',
 		updateUserData: (field, value) =>
 			set((state) => ({ ...state, [field]: value })),
 		updatePersonalInfo: (field, value) =>

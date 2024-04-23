@@ -10,7 +10,7 @@ import RadioButton from '../radio-button/radio-button.component'
 import { ExchangeSelectorContainer } from './exchange-selector.styles'
 
 export default function ExchangeSelector() {
-	const [isValid, setIsVaild] = useState<boolean>(false)
+	const [isValid, setIsValid] = useState<boolean>(false)
 
 	const exchange = useUserDataStore((state) => state.exchange)
 	const updateUserDate = useUserDataStore((state) => state.updateUserData)
@@ -19,7 +19,7 @@ export default function ExchangeSelector() {
 
 	useEffect(() => {
 		const validtaeExchange = (): boolean => exchange.length !== 0
-		setIsVaild(validtaeExchange)
+		setIsValid(validtaeExchange)
 	}, [exchange])
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
