@@ -25,15 +25,14 @@ export default function EmailCheck() {
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+
 		if (isValid) {
 			// Server Communication comes here later
 			// ...
 			// ...
 			forwardProgress()
-			console.log('valid email: ', email)
-		} else {
-			alert('Invalid Email Text')
-		}
+			console.log(`valid email: ${email}`)
+		} else alert('Invalid Email Text')
 	}
 
 	const validateEmail = (email: string): boolean => {

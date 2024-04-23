@@ -10,12 +10,13 @@ export type Exchange = 'bybit' | 'binance' | 'bitget' | 'okx' | 'others' | ''
 
 export interface UserDataState {
 	personalInfo: PersonalInfo
-	tradingViewID: string
+	tradingViewId: string
 	exchange: Exchange
 	uid: string
 }
 
 type UserDataAction = {
+	updateUserData: (field: string, value: string) => void
 	updatePersonalInfo: (field: string, value: string) => void
 	updatePersonalInfoBirth: (field: string, value: string) => void
 }
@@ -23,9 +24,11 @@ type UserDataAction = {
 export const useUserDataStore = create<UserDataState & UserDataAction>(
 	(set) => ({
 		personalInfo: { name: '', tel: '', birth: { year: '', month: '' } },
-		tradingViewID: '',
+		tradingViewId: '',
 		exchange: '',
 		uid: '',
+		updateUserData: (field, value) =>
+			set((state) => ({ ...state, [field]: value })),
 		updatePersonalInfo: (field, value) =>
 			set((state) => ({
 				...state,
