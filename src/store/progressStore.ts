@@ -11,7 +11,7 @@ export interface ProgressAtcion {
 
 export const useProgressStore = create<ProgressState & ProgressAtcion>(
 	(set) => ({
-		progress: 1,
+		progress: 0,
 		forwardProgress: () =>
 			set((state: ProgressState) => ({ progress: state.progress + 1 })),
 		resetProgress: () => set({ progress: 1 }),

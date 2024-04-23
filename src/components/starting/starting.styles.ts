@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const EndingContainer = styled.div`
+export const StartingContainer = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -15,22 +15,13 @@ export const EndingContainer = styled.div`
 		gap: 0.5rem;
 	}
 
-	#lottie-confetti-anim {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100vh;
-		opacity: 0.5;
-		z-index: -5;
-	}
-
-	#lottie-congrats-anim {
+	#lottie-welcome-anim {
 		width: 50%;
+		margin-right: 2rem;
 		min-width: 12.5rem;
 	}
 
-	#discord-button {
+	#start-button {
 		width: 100%;
 		box-sizing: border-box;
 	}
