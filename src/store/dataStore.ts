@@ -6,13 +6,15 @@ export type PersonalInfo = {
 	birth: { year: string; month: string }
 }
 
-export type Exchange = 'bybit' | 'binance' | 'bitget' | 'okx' | 'others' | ''
-
 export interface UserDataState {
 	personalInfo: PersonalInfo
 	tradingViewId: string
-	exchange: Exchange
+	exchange: string
 	uid: string
+}
+
+export interface ExchangeDataState {
+	exchangeList: { name: string; koName: string }[]
 }
 
 type UserDataAction = {
@@ -44,3 +46,13 @@ export const useUserDataStore = create<UserDataState & UserDataAction>(
 			})),
 	}),
 )
+
+export const useExchangeDataStore = create<ExchangeDataState>((set) => ({
+	exchangeList: [
+		{ name: 'binance', koName: '바이낸스' },
+		{ name: 'bybit', koName: '바이비트' },
+		{ name: 'bitget', koName: '비트겟' },
+		{ name: 'okx', koName: 'OKX' },
+		{ name: 'others', koName: '그 외 다른 거래소' },
+	],
+}))
