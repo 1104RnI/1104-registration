@@ -8,6 +8,7 @@ import ProgressIndicator from './components/progress-indicator/progress-indicato
 import RegistrationBody from './components/registration-body/registration-body.component'
 import GetHelp from './components/get-help/get-help.component'
 import Ending from './components/ending/ending.component'
+import Footer from './components/footer/footer.component'
 
 function App() {
 	const progress = useProgressStore((state) => state.progress)
@@ -25,6 +26,7 @@ function App() {
 				) : null}
 				{progress >= 6 ? <Ending /> : null}
 			</div>
+			<Footer />
 		</div>
 	)
 }
