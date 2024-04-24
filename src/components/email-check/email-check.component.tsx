@@ -9,7 +9,6 @@ import Button from '../button/button.component'
 import TextArea from '../text-area/text-area.component'
 import WarningMessage from '../warning-message/warning-message.component'
 import Toast from '../toast/toast.component'
-import Spinner from '../spinner/spinner.component'
 
 import { EmailCheckContainer } from './email-check.styles'
 
