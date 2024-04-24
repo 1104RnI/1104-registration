@@ -32,12 +32,10 @@ export default function EmailCheck() {
 		e.preventDefault()
 
 		if (isValid) {
-			// Server Communication comes here later
-			// ...
-			// ...
+			const data = JSON.stringify({ email })
 			try {
 				const response = await axios.get('https://1104-imweb.com/emailcheck', {
-					params: { email: JSON.stringify({ email }) },
+					data: { data },
 					headers: {
 						'Content-Type': 'application/json',
 					},
