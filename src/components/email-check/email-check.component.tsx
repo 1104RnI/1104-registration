@@ -1,6 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import axios from 'axios'
 
+import { useUserDataStore } from '../../store/dataStore'
 import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
 
 import Input from '../input/input.component'
@@ -10,9 +11,15 @@ import WarningMessage from '../warning-message/warning-message.component'
 
 import { EmailCheckContainer } from './email-check.styles'
 
+interface ResponseData {
+	result: string
+	returnMessage: string
+}
+
 export default function EmailCheck() {
-	const [email, setEmail] = useState<string>('')
 	const [isValid, setIsValid] = useState<boolean>(false)
+	const email = useUserDataStore((state) => state.email)
+	const updateUserData = useUserDataStore((state) => state.updateUserData)
 
 	useEffect(() => {
 		window.scrollTo({ top: 0, behavior: 'auto' })
@@ -24,7 +31,9 @@ export default function EmailCheck() {
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputEmail = e.target.value
-		setEmail(inputEmail)
+		const inputName = e.target.name
+
+		updateUserData(inputName, inputEmail)
 		setIsValid(validateEmail(inputEmail))
 	}
 
@@ -33,17 +42,26 @@ export default function EmailCheck() {
 
 		if (isValid) {
 			try {
-				const response = await axios.get(process.env.REACT_APP_EMAILCHECK_URL, {
-					params: { email: email },
-					headers: { 'X-Requested-With': 'XMLHttpRequest' },
-				})
-				console.log(response.data)
+				const response = await axios.get<ResponseData>(
+					process.env.REACT_APP_EMAILCHECK_URL,
+					{
+						params: { email: email },
+						headers: { 'X-Requested-With': 'XMLHttpRequest' },
+					},
+				)
+				if (response.data.result === 'success') {
+					console.log('등록된 이메일이 확인되었습니다.')
+					forwardProgress()
+				}
 			} catch (error) {
-				console.error('Error checking email: ', error)
+				if (axios.isAxiosError(error)) {
+					if (error.response && error.response.status === 404) {
+						console.error(
+							'등록되지 않은 이메일 입니다. 이메일을 다시 확인해 주세요.',
+						)
+					} else console.error('Error checking email: ', error)
+				}
 			}
-
-			forwardProgress()
-			console.log(`valid email: ${email}`)
 		} else alert('Invalid Email Text')
 	}
 
@@ -70,6 +88,7 @@ export default function EmailCheck() {
 						/>
 					) : null}
 					<Input
+						name="email"
 						type="email"
 						value={email}
 						placeholder="abc@gmail.com"

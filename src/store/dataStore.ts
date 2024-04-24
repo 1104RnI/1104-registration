@@ -7,6 +7,7 @@ export type PersonalInfo = {
 }
 
 export interface UserDataState {
+	email: string
 	personalInfo: PersonalInfo
 	tradingViewId: string
 	exchange: string
@@ -26,6 +27,7 @@ type UserDataAction = {
 
 export const useUserDataStore = create<UserDataState & UserDataAction>(
 	(set) => ({
+		email: '',
 		personalInfo: { name: '', tel: '', birth: { year: '', month: '' } },
 		tradingViewId: '',
 		exchange: '',
