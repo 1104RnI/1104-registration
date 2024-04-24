@@ -8,15 +8,21 @@ export const FooterContainer = styled.div`
 	padding: 1rem;
 	gap: 0rem;
 
-	font-size: 0.875rem;
-
 	color: #b6b6b6;
 
 	p#privacy-text {
+		font-size: 0.875rem;
 		text-decoration: underline;
+
+		cursor: pointer;
 	}
 
 	p#copyright {
 		font-size: 0.75rem;
+		font-weight: 300;
+
+		span {
+			font-weight: 700;
+		}
 	}
 `
