@@ -8,6 +8,8 @@ import Input from '../input/input.component'
 import Button from '../button/button.component'
 import TextArea from '../text-area/text-area.component'
 import WarningMessage from '../warning-message/warning-message.component'
+import Toast from '../toast/toast.component'
+import Spinner from '../spinner/spinner.component'
 
 import { EmailCheckContainer } from './email-check.styles'
 
@@ -18,16 +20,18 @@ interface ResponseData {
 
 export default function EmailCheck() {
 	const [isValid, setIsValid] = useState<boolean>(false)
+	const [isFailed, setIsFailed] = useState<boolean>(false)
 	const email = useUserDataStore((state) => state.email)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
+
+	const updateIsLoading = useProgressStore((state) => state.updateIsLoading)
+	const forwardProgress = useProgressStore(
+		(state: ProgressAtcion) => state.forwardProgress,
+	)
 
 	useEffect(() => {
 		window.scrollTo({ top: 0, behavior: 'auto' })
 	}, [])
-
-	const forwardProgress = useProgressStore(
-		(state: ProgressAtcion) => state.forwardProgress,
-	)
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputEmail = e.target.value
@@ -39,9 +43,12 @@ export default function EmailCheck() {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		setIsFailed(false)
 
 		if (isValid) {
 			try {
+				updateIsLoading()
+
 				const response = await axios.get<ResponseData>(
 					process.env.REACT_APP_EMAILCHECK_URL,
 					{
@@ -51,22 +58,27 @@ export default function EmailCheck() {
 				)
 				if (response.data.result === 'success') {
 					console.log('등록된 이메일이 확인되었습니다.')
+					setIsFailed(false)
 					forwardProgress()
 				}
+				updateIsLoading()
 			} catch (error) {
 				if (axios.isAxiosError(error)) {
+					setIsFailed(true)
+
 					if (error.response && error.response.status === 404) {
 						console.error(
 							'등록되지 않은 이메일 입니다. 이메일을 다시 확인해 주세요.',
 						)
 					} else console.error('Error checking email: ', error)
+					updateIsLoading()
 				}
 			}
 		} else alert('Invalid Email Text')
 	}
 
 	const validateEmail = (email: string): boolean => {
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+		const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/
 		return emailRegex.test(email)
 	}
 
@@ -103,6 +115,13 @@ export default function EmailCheck() {
 					disabled={!isValid}
 				/>
 			</label>
+			{isFailed ? (
+				<Toast
+					text="등록되지 않은 이메일 입니다. 이메일을 다시 확인해 주세요."
+					duration={5000}
+					onClose={() => setIsFailed(false)}
+				/>
+			) : null}
 		</EmailCheckContainer>
 	)
 }

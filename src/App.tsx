@@ -9,12 +9,15 @@ import RegistrationBody from './components/registration-body/registration-body.c
 import GetHelp from './components/get-help/get-help.component'
 import Ending from './components/ending/ending.component'
 import Footer from './components/footer/footer.component'
+import Spinner from './components/spinner/spinner.component'
 
 function App() {
 	const progress = useProgressStore((state) => state.progress)
+	const isLoading = useProgressStore((state) => state.isLoarding)
 
 	return (
 		<div className="App">
+			{isLoading ? <Spinner /> : null}
 			<div id="body-container">
 				{progress <= 0 ? <Starting /> : null}
 				{progress < 6 && progress > 0 ? (
