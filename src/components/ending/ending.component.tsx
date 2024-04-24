@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Lottie from 'lottie-react'
 import confettiAnim from '../../assets/lottie/confettiAnim.json'
@@ -15,6 +15,10 @@ export default function Ending() {
 	const handleAnimationComplete = () => {
 		setIsAnimationVisible(false)
 	}
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: 'auto' })
+	}, [])
 
 	return (
 		<EndingContainer>

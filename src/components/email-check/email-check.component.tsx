@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from 'react'
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 
 import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
 
@@ -12,6 +12,10 @@ import { EmailCheckContainer } from './email-check.styles'
 export default function EmailCheck() {
 	const [email, setEmail] = useState<string>('')
 	const [isValid, setIsValid] = useState<boolean>(false)
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: 'auto' })
+	}, [])
 
 	const forwardProgress = useProgressStore(
 		(state: ProgressAtcion) => state.forwardProgress,

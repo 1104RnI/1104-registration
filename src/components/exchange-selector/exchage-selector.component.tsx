@@ -18,6 +18,10 @@ export default function ExchangeSelector() {
 	const forwardProgress = useProgressStore((state) => state.forwardProgress)
 
 	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: 'auto' })
+	}, [])
+
+	useEffect(() => {
 		const validtaeExchange = (): boolean => exchange.length !== 0
 		setIsValid(validtaeExchange)
 	}, [exchange])
