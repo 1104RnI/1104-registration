@@ -30,7 +30,7 @@ export default function Toast(props: ToastProps) {
 			<div id="toast">
 				<FontAwesomeIcon icon={faCircleExclamation} />
 				<p>{text}</p>
-				<span onClick={() => onClose}>닫기</span>
+				<span onClick={onClose}>닫기</span>
 			</div>
 		</ToastContainer>,
 		document.body,

@@ -8,7 +8,7 @@ export const ToastContainer = styled.div`
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 9999;
-	padding: 1.5rem;
+	padding: 1rem;
 
 	div#toast {
 		width: auto;
