@@ -1,4 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import axios from 'axios'
 
 import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
 
@@ -27,13 +28,25 @@ export default function EmailCheck() {
 		setIsValid(validateEmail(inputEmail))
 	}
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
 		if (isValid) {
 			// Server Communication comes here later
 			// ...
 			// ...
+			try {
+				const response = await axios.get('https://1104-imweb.com/emailcheck', {
+					params: { email: JSON.stringify({ email }) },
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				})
+				console.log(response.data)
+			} catch (error) {
+				console.error('Error checking email: ', error)
+			}
+
 			forwardProgress()
 			console.log(`valid email: ${email}`)
 		} else alert('Invalid Email Text')
