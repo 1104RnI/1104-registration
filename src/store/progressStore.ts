@@ -6,22 +6,30 @@ export interface ResponseData {
 }
 
 type RequestStatus = 'idle' | 'loading' | 'success' | 'error'
+type ExchangeSelectStep =
+	| 'beforeSelection'
+	| 'afterSelection'
+	| 'benefirSelection'
+	| 'uidInput'
 
 export interface ProgressState {
 	requestStatus: RequestStatus
 	progress: number
+	exchangeSelectStep: ExchangeSelectStep
 }
 
 export interface ProgressAtcion {
 	updateRequestStatus: (value: RequestStatus) => void
 	forwardProgress: () => void
 	resetProgress: () => void
+	updateExchangeSelectStep: (value: ExchangeSelectStep) => void
 }
 
 export const useProgressStore = create<ProgressState & ProgressAtcion>(
 	(set) => ({
 		requestStatus: 'idle',
 		progress: 0,
+		exchangeSelectStep: 'beforeSelection',
 		forwardProgress: () =>
 			set((state: ProgressState) => ({
 				...state,
@@ -33,5 +41,7 @@ export const useProgressStore = create<ProgressState & ProgressAtcion>(
 				...state,
 				requestStatus: value,
 			})),
+		updateExchangeSelectStep: (value: ExchangeSelectStep) =>
+			set((state: ProgressState) => ({ ...state, exchangeSelectStep: value })),
 	}),
 )
