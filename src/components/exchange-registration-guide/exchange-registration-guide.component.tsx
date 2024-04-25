@@ -30,6 +30,7 @@ export default function ExchangeRegistrationGuide() {
 			</div>
 			<div id="bottom-bar">
 				<Button
+					type="button"
 					appearance="neutral"
 					hierarchy="primary"
 					text="가이드에 따라 가입을 마쳤어요."

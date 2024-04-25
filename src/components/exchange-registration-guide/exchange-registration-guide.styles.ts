@@ -6,7 +6,7 @@ export const ExchangeRegistrationGuideContainer = styled.div`
 
 	display: flex;
 	flex-direction: column;
-	gap: 1rem;
+	gap: 1.5rem;
 
 	top: 0;
 	left: 0;
@@ -21,7 +21,10 @@ export const ExchangeRegistrationGuideContainer = styled.div`
 	z-index: 9999;
 
 	h4 {
-		padding: 0 0.5rem;
+		margin: 0 0.5rem;
+		padding: 1rem 1rem;
+		border-radius: 1rem;
+		background-color: #f3f3f3;
 	}
 
 	div#notion-page {

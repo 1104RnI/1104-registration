@@ -10,6 +10,7 @@ export interface UserDataState {
 	email: string
 	personalInfo: PersonalInfo
 	tradingViewId: string
+	beginner: boolean
 	exchange: string
 	uid: string
 	assetManagement: string
@@ -30,6 +31,7 @@ export const useUserDataStore = create<UserDataState & UserDataAction>(
 		email: '',
 		personalInfo: { name: '', tel: '', birth: { year: '', month: '' } },
 		tradingViewId: '',
+		beginner: false,
 		exchange: '',
 		uid: '',
 		assetManagement: '',

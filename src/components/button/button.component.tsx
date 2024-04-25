@@ -13,10 +13,12 @@ export interface ButtonProps {
 	handleClick?: MouseEventHandler<HTMLButtonElement>
 	disabled?: boolean
 	id?: string
+	type?: 'submit' | 'button' | 'reset'
 }
 
 export default function Button(props: ButtonProps) {
-	const { appearance, hierarchy, icon, text, handleClick, disabled, id } = props
+	const { appearance, hierarchy, icon, text, handleClick, disabled, id, type } =
+		props
 
 	return (
 		<ButtonContainer
@@ -25,6 +27,7 @@ export default function Button(props: ButtonProps) {
 			onClick={handleClick}
 			disabled={disabled}
 			id={id}
+			type={type}
 		>
 			{icon}
 			<span>{text}</span>

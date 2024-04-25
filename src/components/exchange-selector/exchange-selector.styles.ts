@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const ExchangeSelectorContainer = styled.form`
 	width: 100%;
+	height: auto;
 
 	max-width: 37.5rem;
 	display: flex;
