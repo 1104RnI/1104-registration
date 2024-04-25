@@ -48,7 +48,10 @@ export default function ExchangeSelector() {
 		<ExchangeSelectorContainer onSubmit={handleSubmit}>
 			{isGuideClicked ? (
 				<ExchangeRegistrationGuide
-					handleClick={() => setIsGuideClicked(false)}
+					handleClick={() => {
+						setIsGuideClicked(false)
+						window.scrollTo({ top: 0, behavior: 'auto' })
+					}}
 				/>
 			) : null}
 
