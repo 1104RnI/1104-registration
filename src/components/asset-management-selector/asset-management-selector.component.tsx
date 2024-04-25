@@ -23,10 +23,6 @@ export default function AssetManagementSelector() {
 	const forwardProgress = useProgressStore((state) => state.forwardProgress)
 
 	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: 'auto' })
-	}, [])
-
-	useEffect(() => {
 		const validtaAssetManagement = (): boolean => assetManagement.length !== 0
 		setIsValid(validtaAssetManagement)
 	}, [assetManagement])

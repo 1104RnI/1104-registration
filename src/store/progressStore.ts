@@ -1,5 +1,10 @@
 import { create } from 'zustand'
 
+export interface ResponseData {
+	result: string
+	returnMessage: string
+}
+
 type RequestStatus = 'idle' | 'loading' | 'success' | 'error'
 
 export interface ProgressState {

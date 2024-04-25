@@ -1,6 +1,11 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
+import axios from 'axios'
 
-import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
+import {
+	useProgressStore,
+	ProgressAtcion,
+	ResponseData,
+} from '../../store/progressStore'
 import { useUserDataStore } from '../../store/dataStore'
 
 import Input from '../input/input.component'
@@ -8,31 +13,34 @@ import BirthSelector from '../birth-selector/birth-selector.component'
 import Button from '../button/button.component'
 import TextArea from '../text-area/text-area.component'
 import WarningMessage from '../warning-message/warning-message.component'
+import Toast from '../toast/toast.component'
 
 import { PersonalInfoInputsContainer } from './personal-info-inputs.styles'
 
-type InputValidity = {
+interface InputValidity {
 	isNameValid: boolean
 	isTelValid: boolean
 }
 
 export default function PersonalInfoInputs() {
-	const personalInfo = useUserDataStore((state) => state.personalInfo)
-	const updatePersonalInfo = useUserDataStore(
-		(state) => state.updatePersonalInfo,
-	)
-	const forwardProgress = useProgressStore(
-		(state: ProgressAtcion) => state.forwardProgress,
-	)
-
 	const [isValid, setIsValid] = useState<InputValidity>({
 		isNameValid: false,
 		isTelValid: false,
 	})
 
-	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: 'auto' })
-	}, [])
+	const email = useUserDataStore((state) => state.email)
+	const personalInfo = useUserDataStore((state) => state.personalInfo)
+	const updatePersonalInfo = useUserDataStore(
+		(state) => state.updatePersonalInfo,
+	)
+
+	const requestStatus = useProgressStore((state) => state.requestStatus)
+	const updateRequestStatus = useProgressStore(
+		(state) => state.updateRequestStatus,
+	)
+	const forwardProgress = useProgressStore(
+		(state: ProgressAtcion) => state.forwardProgress,
+	)
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
@@ -101,15 +109,44 @@ export default function PersonalInfoInputs() {
 		} else return false
 	}
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		updateRequestStatus('idle')
 
 		if (isAllValid()) {
+			try {
+				updateRequestStatus('loading')
+
+				const response = await axios.get<ResponseData>(
+					`${process.env.REACT_APP_MODIFY_URL}${email}`,
+					{
+						params: {
+							name: personalInfo.name,
+							callnum: personalInfo.tel,
+							birth: `${personalInfo.birth.year}-${personalInfo.birth.month}`,
+						},
+						headers: { 'X-Requested-With': 'XMLHttpRequest' },
+					},
+				)
+				if (response.data.result === 'success') {
+					forwardProgress()
+				}
+				updateRequestStatus('success')
+			} catch (error) {
+				if (axios.isAxiosError(error)) {
+					updateRequestStatus('error')
+
+					if (error.response && error.response.status === 404) {
+						console.error(
+							'문제가 발생했습니다. 입력하신 개인 정보를 다시 한 번 확인해 주세요.',
+						)
+					} else console.error('Error checking email: ', error)
+				}
+			}
+
 			forwardProgress()
 			console.log(personalInfo)
-		} else {
-			alert('Invalid Personal Info')
-		}
+		} else alert('Invalid Personal Info')
 	}
 
 	return (
@@ -152,6 +189,13 @@ export default function PersonalInfoInputs() {
 					disabled={!isAllValid()}
 				/>
 			</label>
+			{requestStatus === 'error' ? (
+				<Toast
+					text="문제가 발생했습니다. 입력하신 개인 정보를 다시 한 번 확인해 주세요."
+					duration={3000}
+					onClose={() => updateRequestStatus('idle')}
+				/>
+			) : null}
 		</PersonalInfoInputsContainer>
 	)
 }

@@ -1,8 +1,12 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
 import axios from 'axios'
 
 import { useUserDataStore } from '../../store/dataStore'
-import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
+import {
+	useProgressStore,
+	ProgressAtcion,
+	ResponseData,
+} from '../../store/progressStore'
 
 import Input from '../input/input.component'
 import Button from '../button/button.component'
@@ -11,11 +15,6 @@ import WarningMessage from '../warning-message/warning-message.component'
 import Toast from '../toast/toast.component'
 
 import { EmailCheckContainer } from './email-check.styles'
-
-interface ResponseData {
-	result: string
-	returnMessage: string
-}
 
 export default function EmailCheck() {
 	const [isValid, setIsValid] = useState<boolean>(false)
@@ -29,10 +28,6 @@ export default function EmailCheck() {
 	const forwardProgress = useProgressStore(
 		(state: ProgressAtcion) => state.forwardProgress,
 	)
-
-	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: 'auto' })
-	}, [])
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputEmail = e.target.value

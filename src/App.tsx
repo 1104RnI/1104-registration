@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 
 import { useProgressStore } from './store/progressStore'
@@ -15,6 +15,10 @@ import Success from './components/success/success.component'
 function App() {
 	const progress = useProgressStore((state) => state.progress)
 	const requestStatus = useProgressStore((state) => state.requestStatus)
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: 'auto' })
+	}, [progress])
 
 	return (
 		<div className="App">

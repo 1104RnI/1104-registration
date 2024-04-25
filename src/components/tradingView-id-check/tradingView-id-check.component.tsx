@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
 
 import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
 import { useUserDataStore } from '../../store/dataStore'
@@ -19,10 +19,6 @@ export default function TradingViewIdCheck() {
 	const forwardProgress = useProgressStore(
 		(state: ProgressAtcion) => state.forwardProgress,
 	)
-
-	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: 'auto' })
-	}, [])
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
