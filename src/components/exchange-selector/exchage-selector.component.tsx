@@ -50,7 +50,7 @@ export default function ExchangeSelector() {
 			/>
 
 			<div id="buttons-container">
-				<BeginnerButton text="선물 거래가 처음이신가요? 저희가 도와드릴게요!" />
+				<BeginnerButton text="잠깐, 선물 거래가 처음이신가요? 저희가 도와드릴게요!" />
 				<div id="input-container">
 					{exchangeList.map((item, index) => (
 						<RadioButton
