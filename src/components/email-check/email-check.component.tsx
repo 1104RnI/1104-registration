@@ -19,11 +19,13 @@ interface ResponseData {
 
 export default function EmailCheck() {
 	const [isValid, setIsValid] = useState<boolean>(false)
-	const [isFailed, setIsFailed] = useState<boolean>(false)
 	const email = useUserDataStore((state) => state.email)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
 
-	const updateIsLoading = useProgressStore((state) => state.updateIsLoading)
+	const requestStatus = useProgressStore((state) => state.requestStatus)
+	const updateRequestStatus = useProgressStore(
+		(state) => state.updateRequestStatus,
+	)
 	const forwardProgress = useProgressStore(
 		(state: ProgressAtcion) => state.forwardProgress,
 	)
@@ -42,11 +44,11 @@ export default function EmailCheck() {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		setIsFailed(false)
+		updateRequestStatus('idle')
 
 		if (isValid) {
 			try {
-				updateIsLoading()
+				updateRequestStatus('loading')
 
 				const response = await axios.get<ResponseData>(
 					process.env.REACT_APP_EMAILCHECK_URL,
@@ -56,21 +58,18 @@ export default function EmailCheck() {
 					},
 				)
 				if (response.data.result === 'success') {
-					console.log('등록된 이메일이 확인되었습니다.')
-					setIsFailed(false)
 					forwardProgress()
 				}
-				updateIsLoading()
+				updateRequestStatus('success')
 			} catch (error) {
 				if (axios.isAxiosError(error)) {
-					setIsFailed(true)
+					updateRequestStatus('error')
 
 					if (error.response && error.response.status === 404) {
 						console.error(
 							'등록되지 않은 이메일 입니다. 이메일을 다시 확인해 주세요.',
 						)
 					} else console.error('Error checking email: ', error)
-					updateIsLoading()
 				}
 			}
 		} else alert('Invalid Email Text')
@@ -114,11 +113,11 @@ export default function EmailCheck() {
 					disabled={!isValid}
 				/>
 			</label>
-			{isFailed ? (
+			{requestStatus === 'error' ? (
 				<Toast
 					text="등록되지 않은 이메일 입니다. 이메일을 다시 확인해 주세요."
-					duration={5000}
-					onClose={() => setIsFailed(false)}
+					duration={3000}
+					onClose={() => updateRequestStatus('idle')}
 				/>
 			) : null}
 		</EmailCheckContainer>

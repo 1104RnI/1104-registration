@@ -10,14 +10,16 @@ import GetHelp from './components/get-help/get-help.component'
 import Ending from './components/ending/ending.component'
 import Footer from './components/footer/footer.component'
 import Spinner from './components/spinner/spinner.component'
+import Success from './components/success/success.component'
 
 function App() {
 	const progress = useProgressStore((state) => state.progress)
-	const isLoading = useProgressStore((state) => state.isLoarding)
+	const requestStatus = useProgressStore((state) => state.requestStatus)
 
 	return (
 		<div className="App">
-			{isLoading ? <Spinner /> : null}
+			{requestStatus === 'loading' ? <Spinner /> : null}
+			{requestStatus === 'success' ? <Success /> : null}
 			<div id="body-container">
 				{progress <= 0 ? <Starting /> : null}
 				{progress < 6 && progress > 0 ? (

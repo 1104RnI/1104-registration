@@ -1,19 +1,21 @@
 import { create } from 'zustand'
 
+type RequestStatus = 'idle' | 'loading' | 'success' | 'error'
+
 export interface ProgressState {
-	isLoarding: boolean
+	requestStatus: RequestStatus
 	progress: number
 }
 
 export interface ProgressAtcion {
-	updateIsLoading: () => void
+	updateRequestStatus: (value: RequestStatus) => void
 	forwardProgress: () => void
 	resetProgress: () => void
 }
 
 export const useProgressStore = create<ProgressState & ProgressAtcion>(
 	(set) => ({
-		isLoarding: false,
+		requestStatus: 'idle',
 		progress: 0,
 		forwardProgress: () =>
 			set((state: ProgressState) => ({
@@ -21,10 +23,10 @@ export const useProgressStore = create<ProgressState & ProgressAtcion>(
 				progress: state.progress + 1,
 			})),
 		resetProgress: () => set({ progress: 1 }),
-		updateIsLoading: () =>
+		updateRequestStatus: (value: RequestStatus) =>
 			set((state: ProgressState) => ({
 				...state,
-				isLoarding: !state.isLoarding,
+				requestStatus: value,
 			})),
 	}),
 )
