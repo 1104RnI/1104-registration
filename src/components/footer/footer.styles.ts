@@ -10,6 +10,8 @@ export const FooterContainer = styled.div`
 
 	color: #b6b6b6;
 
+	z-index: -9999;
+
 	p#privacy-text {
 		font-size: 0.875rem;
 		text-decoration: underline;

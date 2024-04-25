@@ -2,11 +2,7 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 import axios from 'axios'
 
 import { useUserDataStore } from '../../store/dataStore'
-import {
-	useProgressStore,
-	ProgressAtcion,
-	ResponseData,
-} from '../../store/progressStore'
+import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
 
 import Input from '../input/input.component'
 import Button from '../button/button.component'
@@ -45,14 +41,11 @@ export default function EmailCheck() {
 			try {
 				updateRequestStatus('loading')
 
-				const response = await axios.get<ResponseData>(
-					process.env.REACT_APP_EMAILCHECK_URL,
-					{
-						params: { email: email },
-						headers: { 'X-Requested-With': 'XMLHttpRequest' },
-					},
-				)
-				if (response.data.result === 'success') {
+				const response = await axios.get(process.env.REACT_APP_EMAILCHECK_URL, {
+					params: { email: email },
+					headers: { 'X-Requested-With': 'XMLHttpRequest' },
+				})
+				if (response.status === 200) {
 					forwardProgress()
 				}
 				updateRequestStatus('success')

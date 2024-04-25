@@ -15,7 +15,7 @@ export default function Success() {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			updateRequestState('idle')
-		}, 2500)
+		}, 1500)
 
 		return () => {
 			clearTimeout(timer)

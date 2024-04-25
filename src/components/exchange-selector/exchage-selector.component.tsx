@@ -6,6 +6,7 @@ import { useProgressStore } from '../../store/progressStore'
 import TextArea from '../text-area/text-area.component'
 import Button from '../button/button.component'
 import RadioButton from '../radio-button/radio-button.component'
+import BeginnerButton from '../beginner-button/beginner-button.component'
 
 import { ExchangeSelectorContainer } from './exchange-selector.styles'
 
@@ -49,6 +50,7 @@ export default function ExchangeSelector() {
 			/>
 
 			<div id="buttons-container">
+				<BeginnerButton text="선물 거래가 처음이신가요? 저희가 도와드릴게요!" />
 				<div id="input-container">
 					{exchangeList.map((item, index) => (
 						<RadioButton

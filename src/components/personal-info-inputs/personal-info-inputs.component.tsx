@@ -1,11 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 import axios from 'axios'
 
-import {
-	useProgressStore,
-	ProgressAtcion,
-	ResponseData,
-} from '../../store/progressStore'
+import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
 import { useUserDataStore } from '../../store/dataStore'
 
 import Input from '../input/input.component'
@@ -117,7 +113,7 @@ export default function PersonalInfoInputs() {
 			try {
 				updateRequestStatus('loading')
 
-				const response = await axios.get<ResponseData>(
+				const response = await axios.get(
 					`${process.env.REACT_APP_MODIFY_URL}${email}`,
 					{
 						params: {
@@ -128,7 +124,7 @@ export default function PersonalInfoInputs() {
 						headers: { 'X-Requested-With': 'XMLHttpRequest' },
 					},
 				)
-				if (response.data.result === 'success') {
+				if (response.status === 200) {
 					forwardProgress()
 				}
 				updateRequestStatus('success')
@@ -143,9 +139,6 @@ export default function PersonalInfoInputs() {
 					} else console.error('Error checking email: ', error)
 				}
 			}
-
-			forwardProgress()
-			console.log(personalInfo)
 		} else alert('Invalid Personal Info')
 	}
 
