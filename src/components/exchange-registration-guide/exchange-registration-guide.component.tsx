@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { NotionRenderer } from 'react-notion'
 import 'react-notion/src/styles.css'
 
+import Button from '../button/button.component'
+
 import { ExchangeRegistrationGuideContainer } from './exchange-registration-guide.styles'
 
 export default function ExchangeRegistrationGuide() {
@@ -19,10 +21,21 @@ export default function ExchangeRegistrationGuide() {
 
 	return (
 		<ExchangeRegistrationGuideContainer>
+			<h4>
+				선물 거래를 시작하려면 먼저 해외 거래소부터 가입해야 합니다. 아래의
+				가이드를 따라 해외 거래소 가입을 진행해 주세요.
+			</h4>
 			<div id="notion-page">
 				<NotionRenderer blockMap={response} fullPage={true} />
 			</div>
-			<button id="button">테스트</button>
+			<div id="bottom-bar">
+				<Button
+					appearance="neutral"
+					hierarchy="primary"
+					text="가이드에 따라 가입을 마쳤어요."
+					id="button"
+				/>
+			</div>
 		</ExchangeRegistrationGuideContainer>
 	)
 }
