@@ -9,7 +9,7 @@ export interface ButtonProps {
 	appearance: ButtonAppearance
 	hierarchy: ButtonHierarchy
 	icon?: ReactElement
-	text: string
+	text?: string
 	handleClick?: MouseEventHandler<HTMLButtonElement>
 	disabled?: boolean
 	id?: string
@@ -30,7 +30,7 @@ export default function Button(props: ButtonProps) {
 			type={type}
 		>
 			{icon}
-			<span>{text}</span>
+			{text ? <span>{text}</span> : null}
 		</ButtonContainer>
 	)
 }

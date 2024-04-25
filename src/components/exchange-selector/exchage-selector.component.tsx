@@ -46,7 +46,11 @@ export default function ExchangeSelector() {
 
 	return (
 		<ExchangeSelectorContainer onSubmit={handleSubmit}>
-			{isGuideClicked ? <ExchangeRegistrationGuide /> : null}
+			{isGuideClicked ? (
+				<ExchangeRegistrationGuide
+					handleClick={() => setIsGuideClicked(false)}
+				/>
+			) : null}
 
 			<TextArea
 				title="사용중인 거래소 선택"
