@@ -12,12 +12,13 @@ export interface UserDataState {
 	tradingViewId: string
 	beginner: boolean
 	exchange: string
+	referral: string
 	uid: string
 	assetManagement: string
 }
 
 export interface ExchangeDataState {
-	exchangeList: { name: string; koName: string }[]
+	exchangeList: { name: string; koName: string; referralCode: string }[]
 }
 
 type UserDataAction = {
@@ -33,6 +34,7 @@ export const useUserDataStore = create<UserDataState & UserDataAction>(
 		tradingViewId: '',
 		beginner: false,
 		exchange: '',
+		referral: '',
 		uid: '',
 		assetManagement: '',
 		updateUserData: (field, value) =>
@@ -55,10 +57,10 @@ export const useUserDataStore = create<UserDataState & UserDataAction>(
 
 export const useExchangeDataStore = create<ExchangeDataState>((set) => ({
 	exchangeList: [
-		{ name: 'binance', koName: '바이낸스' },
-		{ name: 'bybit', koName: '바이비트' },
-		{ name: 'bitget', koName: '비트겟' },
-		{ name: 'okx', koName: 'OKX' },
-		{ name: 'others', koName: '그 외 다른 거래소' },
+		{ name: 'binance', koName: '바이낸스', referralCode: '' },
+		{ name: 'bybit', koName: '바이비트', referralCode: '63326' },
+		{ name: 'bitget', koName: '비트겟', referralCode: '' },
+		{ name: 'okx', koName: 'OKX', referralCode: '' },
+		{ name: 'others', koName: '그 외 다른 거래소', referralCode: '' },
 	],
 }))
