@@ -5,6 +5,7 @@ import { useProgressStore } from '../../store/progressStore'
 
 import TextArea from '../text-area/text-area.component'
 import Button from '../button/button.component'
+import Input from '../input/input.component'
 import RadioButton from '../radio-button/radio-button.component'
 
 import { AssetManagementSelectorContainer } from './asset-management-selector.styles'
@@ -17,6 +18,7 @@ export default function AssetManagementSelector() {
 		{ title: '100만 원', value: '100' },
 	]
 	const [isValid, setIsValid] = useState<boolean>(false)
+	const [formattedValue, setFormattedValue] = useState<string>('')
 
 	const assetManagement = useUserDataStore((state) => state.assetManagement)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
@@ -27,11 +29,48 @@ export default function AssetManagementSelector() {
 		setIsValid(validtaAssetManagement)
 	}, [assetManagement])
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleInputRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
 		const inputName = e.target.name
 
 		updateUserData(inputName, inputValue)
+	}
+
+	const formatNumber = (value: string): string => {
+		const numericValue = value.replace(/[^0-9]/g, '')
+		return Number(numericValue).toLocaleString()
+	}
+
+	const isValidInput = (value: string): boolean => {
+		const inputRegex = /^(200[1-9]|20[1-9]\d|2[1-9]\d{2}|[3-9]\d{3}|\d{5,})$/
+		return inputRegex.test(value.replace(/[^0-9]/g, ''))
+	}
+
+	const updateCursorPosition = (
+		inputElement: HTMLInputElement,
+		position: number,
+	) => {
+		setTimeout(() => {
+			inputElement.setSelectionRange(position, position)
+		}, 0)
+	}
+
+	const handleInputTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const inputValue = e.target.value
+		const inputName = e.target.name
+
+		const formattedValue = formatNumber(inputValue)
+		const modifiedValue = `${formattedValue}만 원`
+		setFormattedValue(modifiedValue)
+
+		const sanitizedValue = inputValue.replace(/[^0-9]/g, '')
+		updateUserData(
+			inputName,
+			isValidInput(sanitizedValue) ? sanitizedValue : '',
+		)
+
+		const inputElement = e.target
+		updateCursorPosition(inputElement, formattedValue.length)
 	}
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -42,7 +81,6 @@ export default function AssetManagementSelector() {
 			// ...
 			// ...
 			forwardProgress()
-			console.log(`selected asset management: ${assetManagement}`)
 		} else alert('Invalid asset management info')
 	}
 
@@ -55,13 +93,21 @@ export default function AssetManagementSelector() {
 
 			<div id="buttons-container">
 				<div id="input-container">
+					<Input
+						name="assetManagement"
+						type="text"
+						value={formattedValue}
+						placeholder="2,0000만 원 이상 직접 입력"
+						handleChange={handleInputTextChange}
+						handleFocus={handleInputTextChange}
+					/>
 					{optionList.map((item, index) => (
 						<RadioButton
 							key={index}
 							name="assetManagement"
 							text={item.title}
 							value={item.value}
-							handleChange={handleInputChange}
+							handleChange={handleInputRadioChange}
 							isChecked={assetManagement === item.value}
 						/>
 					))}

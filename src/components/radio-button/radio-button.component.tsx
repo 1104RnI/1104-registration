@@ -18,7 +18,13 @@ export default function RadioButton(props: RadioButtonProps) {
 
 	return (
 		<RadioButtonContainer $isChecked={isChecked ? isChecked : false}>
-			<input name={name} type="radio" value={value} onChange={handleChange} />
+			<input
+				name={name}
+				type="radio"
+				value={value}
+				onChange={handleChange}
+				checked={isChecked}
+			/>
 			<span>{text}</span>
 			{isChecked ? <FontAwesomeIcon icon={faCircleCheck} id="icon" /> : null}
 		</RadioButtonContainer>

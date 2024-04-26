@@ -30,7 +30,7 @@ export default function UidInput() {
 		const inputValue = e.target.value
 		const inputName = e.target.name
 
-		updateUserData(inputName, inputValue)
+		updateUserData(inputName, inputValue.replace(/[^0-9]/g, ''))
 		setIsValid(validateUid(inputValue))
 	}
 
@@ -66,7 +66,7 @@ export default function UidInput() {
 
 	const validateUid = (uid: string): boolean => {
 		const uidRegex = /^\d+$/
-		return uidRegex.test(uid)
+		return uidRegex.test(uid.replace(/[^0-9]/g, ''))
 	}
 
 	return (

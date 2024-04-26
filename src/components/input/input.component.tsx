@@ -9,14 +9,19 @@ type InputProps = {
 	placeholder?: string
 	isValid: boolean
 	handleChange?: (e: ChangeEvent<HTMLInputElement>) => void
+	handleFocus?: (e: FocusEvent<HTMLInputElement>) => void
 }
 
 export default function Input(props: InputProps) {
-	const { name, type, value, placeholder, isValid, handleChange } = props
+	const { name, type, value, placeholder, isValid, handleChange, handleFocus } =
+		props
 
 	const [isFocused, setIsFocused] = useState<boolean>(false)
 
-	const handleFocus = (e: FocusEvent<HTMLInputElement>) => setIsFocused(true)
+	const handleInputFocus = (e: FocusEvent<HTMLInputElement>) => {
+		setIsFocused(true)
+		handleFocus && handleFocus(e)
+	}
 	const handleBlur = (e: FocusEvent<HTMLInputElement>) => setIsFocused(false)
 
 	return (
@@ -24,7 +29,7 @@ export default function Input(props: InputProps) {
 			type={type}
 			name={name}
 			value={value}
-			onFocus={handleFocus}
+			onFocus={handleInputFocus}
 			onBlur={handleBlur}
 			onChange={handleChange}
 			placeholder={placeholder}
