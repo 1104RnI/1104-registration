@@ -20,18 +20,23 @@ export default function Starting() {
 				<TextArea
 					title="환영합니다!"
 					text={[
-						'인디케이터를 셋팅하기 위해서는 추가 정보 등록이 필요합니다. 총 다섯 단계로 진행되지만 오래 걸리지 않아요!',
-						' 수집된 모든 정보는 본인 확인 및 각종 혜택 적용 여부 확인 용도로만 사용되며, 제 3자에게 제공되지 않습니다.',
+						'인디케이터 셋팅을 위해 추가 정보 등록이 필요합니다. 총 다섯 단계로 진행되지만 오래 걸리지 않아요!',
 					]}
 				/>
 			</div>
-			<Button
-				appearance="neutral"
-				hierarchy="primary"
-				text="개인정보 제공 동의하고 시작하기"
-				handleClick={handleClick}
-				id="start-button"
-			/>
+			<div id="button-container">
+				<Button
+					appearance="neutral"
+					hierarchy="primary"
+					text="개인정보 제공 동의하고 시작하기"
+					handleClick={handleClick}
+					id="start-button"
+				/>
+				<span id="disclaimer-text">
+					수집된 모든 정보는 본인 확인 및 각종 혜택 적용 여부 확인 용도로만
+					사용되며, 제 3자에게 제공되지 않습니다.
+				</span>
+			</div>
 		</StartingContainer>
 	)
 }

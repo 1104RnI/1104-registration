@@ -21,8 +21,19 @@ export const StartingContainer = styled.div`
 		min-width: 12.5rem;
 	}
 
-	#start-button {
-		width: 100%;
-		box-sizing: border-box;
+	div#button-container {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+
+		#start-button {
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		span#disclaimer-text {
+			font-size: 0.75rem;
+			line-height: 150%;
+		}
 	}
 `
