@@ -14,11 +14,14 @@ import Success from './components/success/success.component'
 
 function App() {
 	const progress = useProgressStore((state) => state.progress)
+	const exchangeSelectStep = useProgressStore(
+		(state) => state.exchangeSelectStep,
+	)
 	const requestStatus = useProgressStore((state) => state.requestStatus)
 
 	useEffect(() => {
 		window.scrollTo({ top: 0, behavior: 'auto' })
-	}, [progress])
+	}, [progress, exchangeSelectStep, requestStatus])
 
 	return (
 		<div className="App">
