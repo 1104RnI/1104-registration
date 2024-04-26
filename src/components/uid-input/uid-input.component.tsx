@@ -77,7 +77,7 @@ export default function UidInput() {
 			/>
 
 			<label>
-				<div id="inputs-container">
+				<div id="input-container">
 					{!isValid && uid.length !== 0 ? (
 						<WarningMessage
 							text="UID 형식이 올바르지 않습니다. UID 양식(숫자로만 구성)을
@@ -86,7 +86,7 @@ export default function UidInput() {
 					) : null}
 					<Input
 						name="uid"
-						type="number"
+						type="text"
 						value={uid}
 						placeholder="숫자로 이루어진 UID를 입력해 주세요."
 						isValid={uid.length === 0 || isValid}
