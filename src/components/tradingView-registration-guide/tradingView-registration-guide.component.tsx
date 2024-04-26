@@ -5,29 +5,23 @@ import 'react-notion/src/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import { useProgressStore } from '../../store/progressStore'
-
 import Button from '../button/button.component'
 import Card from '../card/card.component'
 
-import { ExchangeRegistrationGuideContainer } from './exchange-registration-guide.styles'
+import { TradingViewRegistrationGuideContainer } from './tradingView-registration-guide'
 
-type ExchangeRegistrationGuideProps = {
+type TradingViewRegistrationGuideProps = {
 	handleClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-export default function ExchangeRegistrationGuide(
-	props: ExchangeRegistrationGuideProps,
+export default function TradingViewRegistrationGuide(
+	props: TradingViewRegistrationGuideProps,
 ) {
 	const { handleClick } = props
 	const [response, setResponse] = useState<any>({})
 
-	const updateExchangeSelectStep = useProgressStore(
-		(state) => state.updateExchangeSelectStep,
-	)
-
 	useEffect(() => {
-		const NOTION_PAGE_ID = 'a4c12b8eca0b40ab9aebde2a398d31c2'
+		const NOTION_PAGE_ID = '260019c96c2e4896a7922422a9d42f8a'
 		fetch(`https://notion-api.splitbee.io/v1/page/${NOTION_PAGE_ID}`)
 			.then((res) => res.json())
 			.then((resJson) => {
@@ -36,7 +30,7 @@ export default function ExchangeRegistrationGuide(
 	}, [])
 
 	return (
-		<ExchangeRegistrationGuideContainer>
+		<TradingViewRegistrationGuideContainer>
 			<div id="body-container">
 				<div id="top-bar">
 					<div id="close-button-container">
@@ -52,8 +46,8 @@ export default function ExchangeRegistrationGuide(
 				</div>
 				<Card>
 					<h4>
-						선물 거래를 시작하려면 먼저 해외 거래소부터 가입해야 합니다. 아래의
-						가이드를 따라 해외 거래소 가입을 진행해 주세요.
+						아래의 가이드를 따라 트레이딩뷰 가입을 진행해 주세요. 모두 완료되면
+						아래의 버튼을 눌러 트레이딩뷰 ID 입력을 마무리 하세요.
 					</h4>
 				</Card>
 				<div id="notion-page">
@@ -66,10 +60,10 @@ export default function ExchangeRegistrationGuide(
 						hierarchy="primary"
 						text="가이드에 따라 가입을 마쳤어요."
 						id="button"
-						handleClick={() => updateExchangeSelectStep('uidInput')}
+						handleClick={handleClick}
 					/>
 				</div>
 			</div>
-		</ExchangeRegistrationGuideContainer>
+		</TradingViewRegistrationGuideContainer>
 	)
 }

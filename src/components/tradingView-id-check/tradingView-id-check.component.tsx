@@ -7,11 +7,14 @@ import Input from '../input/input.component'
 import Button from '../button/button.component'
 import TextArea from '../text-area/text-area.component'
 import WarningMessage from '../warning-message/warning-message.component'
+import BeginnerButton from '../beginner-button/beginner-button.component'
+import TradingViewRegistrationGuide from '../tradingView-registration-guide/tradingView-registration-guide.component'
 
 import { TradingViewIdCheckContainer } from './tradingView-id-check.styles'
 
 export default function TradingViewIdCheck() {
 	const [isValid, setIsValid] = useState<boolean>(false)
+	const [isGuideClicked, setIsGuideClicked] = useState<boolean>(false)
 
 	const tradingViewId = useUserDataStore((state) => state.tradingViewId)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
@@ -47,6 +50,15 @@ export default function TradingViewIdCheck() {
 
 	return (
 		<TradingViewIdCheckContainer onSubmit={handleSubmit}>
+			{isGuideClicked ? (
+				<TradingViewRegistrationGuide
+					handleClick={() => {
+						setIsGuideClicked(false)
+						window.scrollTo({ top: 0, behavior: 'auto' })
+					}}
+				/>
+			) : null}
+
 			<TextArea
 				title="트레이딩뷰 ID 입력"
 				text={[
@@ -54,6 +66,13 @@ export default function TradingViewIdCheck() {
 				]}
 			/>
 			<label>
+				<BeginnerButton
+					text="신규 가입하면 트레이딩뷰 첫 요금제 결제시 $15를 돌려 받을 수 있어요!"
+					onClick={() => {
+						setIsGuideClicked(true)
+						window.scrollTo({ top: 0, behavior: 'auto' })
+					}}
+				/>
 				<div id="input-container">
 					{!isValid && tradingViewId.length !== 0 ? (
 						<WarningMessage

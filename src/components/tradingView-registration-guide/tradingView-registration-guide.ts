@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ExchangeRegistrationGuideContainer = styled.div`
+export const TradingViewRegistrationGuideContainer = styled.div`
 	position: absolute;
 	width: 100%;
 
@@ -17,7 +17,7 @@ export const ExchangeRegistrationGuideContainer = styled.div`
 	background-color: white;
 	text-align: left;
 
-	padding: 4rem 1rem 4rem 1rem;
+	padding: 4rem 1rem 6rem 1rem;
 
 	z-index: 9999;
 
