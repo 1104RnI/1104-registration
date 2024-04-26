@@ -8,5 +8,6 @@ export const TextAreaContainer = styled.div`
 
 	h1 {
 		margin-bottom: 1rem;
+		line-height: 120%;
 	}
 `

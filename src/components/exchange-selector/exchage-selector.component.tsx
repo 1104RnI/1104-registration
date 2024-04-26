@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 
 import { useUserDataStore, useExchangeDataStore } from '../../store/dataStore'
-// import { useProgressStore } from '../../store/progressStore'
+import { useProgressStore } from '../../store/progressStore'
 
 import TextArea from '../text-area/text-area.component'
 import Button from '../button/button.component'
@@ -18,6 +18,9 @@ export default function ExchangeSelector() {
 	const exchange = useUserDataStore((state) => state.exchange)
 	const updateUserDate = useUserDataStore((state) => state.updateUserData)
 	const exchangeList = useExchangeDataStore((state) => state.exchangeList)
+	const updateExchangeSelectStep = useProgressStore(
+		(state) => state.updateExchangeSelectStep,
+	)
 	// const forwardProgress = useProgressStore((state) => state.forwardProgress)
 
 	useEffect(() => {
@@ -39,6 +42,7 @@ export default function ExchangeSelector() {
 			// Server Communication comes here later
 			// ...
 			// ...
+			updateExchangeSelectStep('afterSelection')
 		} else alert('Invalid exchange info')
 	}
 

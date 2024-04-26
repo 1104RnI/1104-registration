@@ -25,7 +25,7 @@ export default function Success() {
 	return (
 		<SuccessContainer>
 			<Lottie animationData={successAnim} loop={false} />
-			<h3>완료되었습니다.</h3>
+			{/* <h3>완료되었습니다.</h3> */}
 		</SuccessContainer>
 	)
 }

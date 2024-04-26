@@ -4,10 +4,16 @@ import { CardContainer } from './card.styles'
 
 type CardProps = {
 	children?: ReactNode
+	id?: string
+	className?: string
 }
 
 export default function Card(props: CardProps) {
-	const { children } = props
+	const { children, id, className } = props
 
-	return <CardContainer>{children}</CardContainer>
+	return (
+		<CardContainer id={id} className={className}>
+			{children}
+		</CardContainer>
+	)
 }

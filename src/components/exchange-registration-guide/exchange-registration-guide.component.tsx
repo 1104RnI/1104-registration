@@ -5,6 +5,8 @@ import 'react-notion/src/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
+import { useProgressStore } from '../../store/progressStore'
+
 import Button from '../button/button.component'
 
 import { ExchangeRegistrationGuideContainer } from './exchange-registration-guide.styles'
@@ -18,6 +20,10 @@ export default function ExchangeRegistrationGuide(
 ) {
 	const { handleClick } = props
 	const [response, setResponse] = useState<any>({})
+
+	const updateExchangeSelectStep = useProgressStore(
+		(state) => state.updateExchangeSelectStep,
+	)
 
 	useEffect(() => {
 		const NOTION_PAGE_ID = 'a4c12b8eca0b40ab9aebde2a398d31c2'
@@ -57,7 +63,7 @@ export default function ExchangeRegistrationGuide(
 						hierarchy="primary"
 						text="가이드에 따라 가입을 마쳤어요."
 						id="button"
-						handleClick={handleClick}
+						handleClick={() => updateExchangeSelectStep('uidInput')}
 					/>
 				</div>
 			</div>

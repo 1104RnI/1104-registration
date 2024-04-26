@@ -9,7 +9,7 @@ type RequestStatus = 'idle' | 'loading' | 'success' | 'error'
 type ExchangeSelectStep =
 	| 'beforeSelection'
 	| 'afterSelection'
-	| 'benefirSelection'
+	| 'benefitSelection'
 	| 'uidInput'
 
 export interface ProgressState {

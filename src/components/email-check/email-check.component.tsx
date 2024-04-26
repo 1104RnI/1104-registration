@@ -14,6 +14,7 @@ import { EmailCheckContainer } from './email-check.styles'
 
 export default function EmailCheck() {
 	const [isValid, setIsValid] = useState<boolean>(false)
+
 	const email = useUserDataStore((state) => state.email)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
 

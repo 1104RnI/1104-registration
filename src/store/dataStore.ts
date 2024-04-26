@@ -17,8 +17,15 @@ export interface UserDataState {
 	assetManagement: string
 }
 
+export type Exchange = {
+	name: string
+	koName: string
+	referralCode: string
+	url: string
+}
+
 export interface ExchangeDataState {
-	exchangeList: { name: string; koName: string; referralCode: string }[]
+	exchangeList: Exchange[]
 }
 
 type UserDataAction = {
@@ -57,10 +64,15 @@ export const useUserDataStore = create<UserDataState & UserDataAction>(
 
 export const useExchangeDataStore = create<ExchangeDataState>((set) => ({
 	exchangeList: [
-		{ name: 'binance', koName: '바이낸스', referralCode: '' },
-		{ name: 'bybit', koName: '바이비트', referralCode: '63326' },
-		{ name: 'bitget', koName: '비트겟', referralCode: '' },
-		{ name: 'okx', koName: 'OKX', referralCode: '' },
-		{ name: 'others', koName: '그 외 다른 거래소', referralCode: '' },
+		{ name: 'binance', koName: '바이낸스', referralCode: '', url: '' },
+		{
+			name: 'bybit',
+			koName: '바이비트',
+			referralCode: '63326',
+			url: 'https://www.bybit.com/en/sign-up?affiliate_id=63326&group_id=0&group_type=1',
+		},
+		{ name: 'bitget', koName: '비트겟', referralCode: '', url: '' },
+		{ name: 'okx', koName: 'OKX', referralCode: '', url: '' },
+		{ name: 'others', koName: '그 외 다른 거래소', referralCode: '', url: '' },
 	],
 }))
