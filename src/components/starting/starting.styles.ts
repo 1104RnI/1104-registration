@@ -17,7 +17,7 @@ export const StartingContainer = styled.div`
 
 	#lottie-welcome-anim {
 		width: 50%;
-		margin-right: 2rem;
+		/* margin-right: 2rem; */
 		min-width: 12.5rem;
 	}
 
