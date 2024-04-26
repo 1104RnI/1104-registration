@@ -7,6 +7,8 @@ import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
 import TextArea from '../text-area/text-area.component'
 import Input from '../input/input.component'
 import Button from '../button/button.component'
+import WarningMessage from '../warning-message/warning-message.component'
+// import Toast from '../toast/toast.component'
 
 import { UidInputContainer } from './uid-input.styles'
 
@@ -73,22 +75,38 @@ export default function UidInput() {
 				title="거래소 UID 입력"
 				text={['가입하신 거래소의 UID를 입력해 주세요.']}
 			/>
-			<div id="inputs-container">
-				<Input
-					name="uid"
-					type="number"
-					value={uid}
-					placeholder="숫자로 이루어진 UID를 입력해 주세요."
-					isValid={uid.length === 0 || isValid}
-					handleChange={handleUidChange}
-				/>
+
+			<label>
+				<div id="inputs-container">
+					{!isValid && uid.length !== 0 ? (
+						<WarningMessage
+							text="UID 형식이 올바르지 않습니다. UID 양식(숫자로만 구성)을
+							확인해 주세요."
+						/>
+					) : null}
+					<Input
+						name="uid"
+						type="number"
+						value={uid}
+						placeholder="숫자로 이루어진 UID를 입력해 주세요."
+						isValid={uid.length === 0 || isValid}
+						handleChange={handleUidChange}
+					/>
+				</div>
 				<Button
 					appearance="neutral"
 					hierarchy="primary"
 					text="입력 완료"
 					disabled={!isValid}
 				/>
-			</div>
+			</label>
+			{/* {requestStatus === 'error' ? (
+				<Toast
+					text="오류가 발생했습니다. UID를 다시 확인해 주세요."
+					duration={3000}
+					onClose={() => updateRequestStatus('idle')}
+				/>
+			) : null} */}
 		</UidInputContainer>
 	)
 }
