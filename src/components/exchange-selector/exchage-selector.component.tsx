@@ -58,8 +58,8 @@ export default function ExchangeSelector() {
 			) : null}
 
 			<TextArea
-				title="사용중인 거래소 선택"
-				text={['현재 사용중이신 주 거래소를 선택해 주세요.']}
+				title="사용중인 주거래소 선택"
+				text={['현재 사용중이신 주거래소를 선택해 주세요.']}
 			/>
 
 			<div id="buttons-container">

@@ -114,7 +114,7 @@ export default function AssetManagementSelector() {
 
 			<div id="buttons-container">
 				<div id="input-container">
-					{!isCutsomInputValid && !isValid ? (
+					{!isCutsomInputValid && !isValid && formattedValue.length !== 0 ? (
 						<WarningMessage text="직접 입력은 2,000만 원 보다 높게(예. 2,001 만 원 이상) 입력해 주세요." />
 					) : null}
 					<label id="custom-input-label">
@@ -123,7 +123,7 @@ export default function AssetManagementSelector() {
 							type="text"
 							value={formattedValue}
 							placeholder="2,0000만 원 초과 직접 입력"
-							isValid={isCutsomInputValid}
+							isValid={isCutsomInputValid || assetManagement.length === 0}
 							handleChange={handleInputTextChange}
 							handleFocus={handleInputTextChange}
 						/>

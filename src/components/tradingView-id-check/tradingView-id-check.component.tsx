@@ -44,7 +44,6 @@ export default function TradingViewIdCheck() {
 			// ...
 			// ...
 			forwardProgress()
-			console.log(`valid tradingView ID: ${tradingViewId}`)
 		} else alert('Invalid TradingView ID')
 	}
 
