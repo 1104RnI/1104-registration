@@ -3,10 +3,14 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { useUserDataStore } from '../../store/dataStore'
 import { useProgressStore } from '../../store/progressStore'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+
 import TextArea from '../text-area/text-area.component'
 import Button from '../button/button.component'
 import Input from '../input/input.component'
 import RadioButton from '../radio-button/radio-button.component'
+import WarningMessage from '../warning-message/warning-message.component'
 
 import { AssetManagementSelectorContainer } from './asset-management-selector.styles'
 
@@ -19,6 +23,7 @@ export default function AssetManagementSelector() {
 	]
 	const [isValid, setIsValid] = useState<boolean>(false)
 	const [formattedValue, setFormattedValue] = useState<string>('')
+	const [isCutsomInputValid, setIsCutsomInputValid] = useState<boolean>(false)
 
 	const assetManagement = useUserDataStore((state) => state.assetManagement)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
@@ -38,7 +43,20 @@ export default function AssetManagementSelector() {
 
 	const formatNumber = (value: string): string => {
 		const numericValue = value.replace(/[^0-9]/g, '')
-		return Number(numericValue).toLocaleString()
+		const length = numericValue.length
+
+		if (length <= 3) {
+			return numericValue
+		} else if (length === 4) {
+			return `${numericValue.slice(0, 1)},${numericValue.slice(1)}`
+		} else {
+			const billionDigits = numericValue.slice(0, -4)
+			const millionDigits = numericValue.slice(-4)
+			return `${billionDigits}억 ${millionDigits.slice(
+				0,
+				1,
+			)},${millionDigits.slice(1)}`
+		}
 	}
 
 	const isValidInput = (value: string): boolean => {
@@ -58,17 +76,19 @@ export default function AssetManagementSelector() {
 	const handleInputTextChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
 		const inputName = e.target.name
-
+		const sanitizedValue = inputValue.replace(/[^0-9]/g, '')
 		const formattedValue = formatNumber(inputValue)
 		const modifiedValue = `${formattedValue}만 원`
-		setFormattedValue(modifiedValue)
 
-		const sanitizedValue = inputValue.replace(/[^0-9]/g, '')
+		parseInt(sanitizedValue) <= 2000
+			? setIsCutsomInputValid(false)
+			: setIsCutsomInputValid(true)
+
+		setFormattedValue(modifiedValue)
 		updateUserData(
 			inputName,
 			isValidInput(sanitizedValue) ? sanitizedValue : '',
 		)
-
 		const inputElement = e.target
 		updateCursorPosition(inputElement, formattedValue.length)
 	}
@@ -80,6 +100,7 @@ export default function AssetManagementSelector() {
 			// Server Communication comes here later
 			// ...
 			// ...
+
 			forwardProgress()
 		} else alert('Invalid asset management info')
 	}
@@ -93,14 +114,23 @@ export default function AssetManagementSelector() {
 
 			<div id="buttons-container">
 				<div id="input-container">
-					<Input
-						name="assetManagement"
-						type="text"
-						value={formattedValue}
-						placeholder="2,0000만 원 이상 직접 입력"
-						handleChange={handleInputTextChange}
-						handleFocus={handleInputTextChange}
-					/>
+					{!isCutsomInputValid && !isValid ? (
+						<WarningMessage text="직접 입력은 2,000만 원 보다 높게(예. 2,001 만 원 이상) 입력해 주세요." />
+					) : null}
+					<label id="custom-input-label">
+						<Input
+							name="assetManagement"
+							type="text"
+							value={formattedValue}
+							placeholder="2,0000만 원 초과 직접 입력"
+							isValid={isCutsomInputValid}
+							handleChange={handleInputTextChange}
+							handleFocus={handleInputTextChange}
+						/>
+						{parseInt(assetManagement) >= 2001 ? (
+							<FontAwesomeIcon icon={faCircleCheck} id="icon" />
+						) : null}
+					</label>
 					{optionList.map((item, index) => (
 						<RadioButton
 							key={index}

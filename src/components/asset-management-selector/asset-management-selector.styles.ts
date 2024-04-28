@@ -20,6 +20,22 @@ export const AssetManagementSelectorContainer = styled.form`
 			display: flex;
 			flex-direction: column;
 			gap: 0.5rem;
+
+			label#custom-input-label {
+				position: relative;
+
+				display: flex;
+				align-items: center;
+				width: 100%;
+
+				#icon {
+					position: absolute;
+					right: 0.875rem;
+
+					font-size: 1.5rem;
+					color: #000000;
+				}
+			}
 		}
 	}
 `
