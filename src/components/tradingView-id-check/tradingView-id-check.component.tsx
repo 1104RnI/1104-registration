@@ -66,7 +66,7 @@ export default function TradingViewIdCheck() {
 			/>
 			<label>
 				<BeginnerButton
-					text="신규 가입하면 트레이딩뷰 첫 요금제 결제시 $15를 돌려 받을 수 있어요!"
+					text="트레이딩뷰 사용이 처음이세요? 저희가 도와드릴게요!"
 					onClick={() => {
 						setIsGuideClicked(true)
 						window.scrollTo({ top: 0, behavior: 'auto' })

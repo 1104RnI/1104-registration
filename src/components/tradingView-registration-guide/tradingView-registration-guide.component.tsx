@@ -21,7 +21,7 @@ export default function TradingViewRegistrationGuide(
 	const [response, setResponse] = useState<any>({})
 
 	useEffect(() => {
-		const NOTION_PAGE_ID = '260019c96c2e4896a7922422a9d42f8a'
+		const NOTION_PAGE_ID = '8599c75fae1740f1a5161fbbfcacd831'
 		fetch(`https://notion-api.splitbee.io/v1/page/${NOTION_PAGE_ID}`)
 			.then((res) => res.json())
 			.then((resJson) => {
