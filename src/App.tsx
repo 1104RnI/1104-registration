@@ -3,6 +3,7 @@ import './App.css'
 
 import { useProgressStore } from './store/progressStore'
 
+import AnimatedWrapper from './components/animated-wrapper/animated-wrapper.component'
 import Starting from './components/starting/starting.component'
 import ProgressIndicator from './components/progress-indicator/progress-indicator.component'
 import RegistrationBody from './components/registration-body/registration-body.component'
@@ -28,7 +29,9 @@ function App() {
 			{requestStatus === 'loading' ? <Spinner /> : null}
 			{requestStatus === 'success' ? <Success /> : null}
 			<div id="body-container">
-				{progress <= 0 ? <Starting /> : null}
+				{progress <= 0 ? (
+					<AnimatedWrapper component={Starting} key="starting" />
+				) : null}
 				{progress < 6 && progress > 0 ? (
 					<>
 						<ProgressIndicator />
@@ -36,7 +39,9 @@ function App() {
 						<GetHelp />
 					</>
 				) : null}
-				{progress >= 6 ? <Ending /> : null}
+				{progress >= 6 ? (
+					<AnimatedWrapper component={Ending} key="ending" />
+				) : null}
 			</div>
 			<Footer />
 		</div>
