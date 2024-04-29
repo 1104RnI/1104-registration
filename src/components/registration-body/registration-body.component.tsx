@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 
+import { useAnimationStore } from '../../store/dataStore'
 import { useProgressStore, ProgressState } from '../../store/progressStore'
 
 import EmailCheck from '../email-check/email-check.component'
@@ -20,12 +21,7 @@ const ProgressComponent: React.FC<ProgressComponentProps> = ({
 	component: Component,
 	...props
 }) => {
-	const animationProps = {
-		initial: { opacity: 0 },
-		animate: { opacity: 1 },
-		exit: { opacity: 0 },
-		transition: { duration: 1 },
-	}
+	const animationProps = useAnimationStore((state) => state.animationProps)
 
 	return (
 		<AnimatePresence>

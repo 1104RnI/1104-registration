@@ -38,6 +38,15 @@ export interface AssetOptionState {
 	optionList: AssetOption[]
 }
 
+export interface AnimationState {
+	animationProps: {
+		initial: { opacity: number }
+		animate: { opacity: number }
+		exit: { opacity: number }
+		transition: { duration: number }
+	}
+}
+
 type UserDataAction = {
 	setUserData: (state: Partial<UserDataState>) => void
 	updateUserData: (field: string, value: string | boolean) => void
@@ -100,4 +109,13 @@ export const useAssetOptionsStore = create<AssetOptionState>((set) => ({
 		{ title: '400만 원', value: '400' },
 		{ title: '100만 원', value: '100' },
 	],
+}))
+
+export const useAnimationStore = create<AnimationState>((set) => ({
+	animationProps: {
+		initial: { opacity: 0 },
+		animate: { opacity: 1 },
+		exit: { opacity: 0 },
+		transition: { duration: 1 },
+	},
 }))
