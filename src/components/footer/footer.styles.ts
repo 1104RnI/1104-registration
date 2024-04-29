@@ -10,13 +10,19 @@ export const FooterContainer = styled.div`
 
 	color: #b6b6b6;
 
-	z-index: -9999;
+	button#privacy-button {
+		width: auto;
 
-	p#privacy-text {
-		font-size: 0.875rem;
-		text-decoration: underline;
-
+		all: unset;
 		cursor: pointer;
+
+		font-size: 0.875rem;
+		/* text-decoration: underline; */
+
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}
 
 	p#copyright {
