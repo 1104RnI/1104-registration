@@ -9,14 +9,14 @@ const useForwardProgress = (delay: number = 1500) => {
 		console.log(1)
 		if (requestStatus === 'success') {
 			console.log(2)
-			const timeoutId = setTimeout(() => {
-				console.log(3)
-				forwardProgress()
-			}, delay)
+			// const timeoutId = setTimeout(() => {
+			// 	console.log(3)
+			forwardProgress()
+			// }, delay)
 
-			return () => {
-				clearTimeout(timeoutId)
-			}
+			// return () => {
+			// 	clearTimeout(timeoutId)
+			// }
 		}
 	}, [requestStatus, forwardProgress, delay])
 }
