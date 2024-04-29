@@ -8,9 +8,11 @@ const useForwardProgress = (delay: number = 1500) => {
 
 	useEffect(() => {
 		let timeoutId: NodeJS.Timeout
-
+		console.log(1)
 		if (requestStatus === 'success') {
+			console.log(2)
 			timeoutId = setTimeout(() => {
+				console.log(3)
 				forwardProgress()
 			}, delay)
 		}
