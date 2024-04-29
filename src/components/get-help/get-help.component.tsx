@@ -1,21 +1,31 @@
 import { MouseEvent } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
+import {
+	faCircleInfo,
+	faCircleQuestion,
+} from '@fortawesome/free-solid-svg-icons'
 
-import { GetHelpContainer } from './get-help.styles'
+import { GetHelpContainer, ButtonType } from './get-help.styles'
 
-export default function GetHelp() {
-	const handleClick = (e: MouseEvent<HTMLSpanElement>): void => {
-		console.log('Get Help Clicked')
-	}
+type GetHelpProps = {
+	buttonType: ButtonType
+	text: string
+	handleClick?: (e: MouseEvent<HTMLButtonElement>) => void
+}
+
+export default function GetHelp(props: GetHelpProps) {
+	const { buttonType, text, handleClick } = props
 
 	return (
-		<GetHelpContainer>
-			<FontAwesomeIcon icon={faCircleInfo} id="icon" />
-			<span onClick={handleClick}>
-				도움이 필요하시다면, 여기를 클릭해 주세요.
-			</span>
+		<GetHelpContainer $buttonType={buttonType} type="button">
+			{buttonType === 'contactHelp' ? (
+				<FontAwesomeIcon icon={faCircleInfo} id="icon" />
+			) : null}
+			{buttonType === 'guideHelp' ? (
+				<FontAwesomeIcon icon={faCircleQuestion} id="icon" />
+			) : null}
+			<span onClick={handleClick}>{text}</span>
 		</GetHelpContainer>
 	)
 }

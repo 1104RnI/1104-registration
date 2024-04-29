@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const BeginnerButtonContainer = styled.button`
-	width: auto;
+	width: fit-content;
 
 	all: unset;
 	cursor: pointer;
@@ -23,7 +23,7 @@ export const BeginnerButtonContainer = styled.button`
 	background-color: #f5f9e1;
 
 	text-align: left;
-	text-decoration: underline;
+	/* text-decoration: underline; */
 
 	#icon {
 		font-size: 1.5rem;

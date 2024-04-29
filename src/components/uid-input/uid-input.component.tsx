@@ -10,11 +10,13 @@ import Input from '../input/input.component'
 import Button from '../button/button.component'
 import WarningMessage from '../warning-message/warning-message.component'
 import Toast from '../toast/toast.component'
+import NotionPage from '../notion-page/notion-page.component'
 
 import { UidInputContainer } from './uid-input.styles'
 
 export default function UidInput() {
 	const [isValid, setIsValid] = useState<boolean>(false)
+	const [isGuideClicked, setIsGuideClicked] = useState<boolean>(false)
 
 	const email = useUserDataStore((state) => state.email)
 	const referral = useUserDataStore((state) => state.referral)
@@ -49,11 +51,27 @@ export default function UidInput() {
 		return uidRegex.test(uid.replace(/[^0-9]/g, ''))
 	}
 
+	const closeGuide = () => {
+		setIsGuideClicked(false)
+		window.scrollTo({ top: 0, behavior: 'auto' })
+	}
+
 	return (
 		<UidInputContainer onSubmit={handleSubmit}>
+			{isGuideClicked ? (
+				<NotionPage
+					pageId="70883ab1b5a746db91797956a84338a0"
+					handleCloseButtonClick={closeGuide}
+					bottomButtonText="가이드대로 확인했어요"
+					handleBottomButtonClick={closeGuide}
+				/>
+			) : null}
+
 			<TextArea
 				title="거래소 UID 입력"
 				text={['가입하신 거래소의 UID를 입력해 주세요.']}
+				link="거래소 UID를 확인하는 방법은 여기를 클릭해 확인할 수 있어요."
+				handleClick={() => setIsGuideClicked(true)}
 			/>
 
 			<label>
@@ -74,6 +92,7 @@ export default function UidInput() {
 					/>
 				</div>
 				<Button
+					id="submit-button"
 					appearance="neutral"
 					hierarchy="primary"
 					text="입력 완료"

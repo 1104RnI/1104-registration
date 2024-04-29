@@ -8,18 +8,26 @@ export const TradingViewIdCheckContainer = styled.form`
 	flex-direction: column;
 	gap: 4rem;
 
-	label {
+	div#button-label-container {
 		width: 100%;
 
 		display: flex;
 		flex-direction: column;
-
 		gap: 1.5rem;
 
-		div#input-container {
+		label {
+			width: 100%;
+
 			display: flex;
 			flex-direction: column;
-			gap: 0.5rem;
+
+			gap: 1.5rem;
+
+			div#input-container {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
 		}
 	}
 `

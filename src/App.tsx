@@ -36,7 +36,11 @@ function App() {
 					<>
 						<ProgressIndicator />
 						<RegistrationBody />
-						<GetHelp />
+						<GetHelp
+							buttonType="contactHelp"
+							text="도움이 필요하시다면, 여기를 클릭해 주세요."
+							handleClick={() => console.log('Get Help Clicked')}
+						/>
 					</>
 				) : null}
 				{progress >= 6 ? (

@@ -5,14 +5,13 @@ export const FooterContainer = styled.div`
 
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	padding: 1rem;
 	gap: 0rem;
 
 	color: #b6b6b6;
 
 	button#privacy-button {
-		width: auto;
-
 		all: unset;
 		cursor: pointer;
 

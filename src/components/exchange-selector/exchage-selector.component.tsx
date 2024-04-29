@@ -9,7 +9,7 @@ import TextArea from '../text-area/text-area.component'
 import Button from '../button/button.component'
 import RadioButton from '../radio-button/radio-button.component'
 import BeginnerButton from '../beginner-button/beginner-button.component'
-import ExchangeRegistrationGuide from '../exchange-registration-guide/exchange-registration-guide.component'
+import NotionPage from '../notion-page/notion-page.component'
 import Toast from '../toast/toast.component'
 
 import { ExchangeSelectorContainer } from './exchange-selector.styles'
@@ -23,10 +23,15 @@ export default function ExchangeSelector() {
 	const beginner = useUserDataStore((state) => state.beginner)
 	const updateUserDate = useUserDataStore((state) => state.updateUserData)
 	const exchangeList = useExchangeDataStore((state) => state.exchangeList)
+	const defaultExchange = useExchangeDataStore((state) => state.defaultExchange)
+	const setUserData = useUserDataStore((state) => state.setUserData)
 
 	const requestStatus = useProgressStore((state) => state.requestStatus)
 	const updateRequestStatus = useProgressStore(
 		(state) => state.updateRequestStatus,
+	)
+	const updateExchangeSelectStep = useProgressStore(
+		(state) => state.updateExchangeSelectStep,
 	)
 
 	useEffect(() => {
@@ -56,10 +61,22 @@ export default function ExchangeSelector() {
 	return (
 		<ExchangeSelectorContainer onSubmit={handleSubmit}>
 			{isGuideClicked ? (
-				<ExchangeRegistrationGuide
-					handleClick={() => {
+				<NotionPage
+					pageId="a4c12b8eca0b40ab9aebde2a398d31c2"
+					handleCloseButtonClick={() => {
 						setIsGuideClicked(false)
 						window.scrollTo({ top: 0, behavior: 'auto' })
+					}}
+					description="선물 거래를 시작하려면 먼저 해외 거래소부터 가입해야 합니다. 아래의
+						가이드를 따라 해외 거래소 가입을 진행해 주세요."
+					bottomButtonText="가이드에 따라 가입을 마쳤어요."
+					handleBottomButtonClick={() => {
+						updateExchangeSelectStep('uidInput')
+						setUserData({
+							referral: true,
+							beginner: true,
+							exchange: defaultExchange,
+						})
 					}}
 				/>
 			) : null}

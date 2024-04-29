@@ -13,13 +13,20 @@ export const UidInputContainer = styled.form`
 
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 
 		gap: 1.5rem;
 
 		div#input-container {
+			width: 100%;
 			display: flex;
 			flex-direction: column;
 			gap: 0.5rem;
+		}
+
+		#submit-button {
+			box-sizing: border-box;
+			width: 100%;
 		}
 	}
 `

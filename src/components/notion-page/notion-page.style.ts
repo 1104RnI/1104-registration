@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ExchangeRegistrationGuideContainer = styled.div`
+export const NotionPageContainer = styled.div`
 	position: absolute;
 	width: 100%;
 
@@ -17,7 +17,7 @@ export const ExchangeRegistrationGuideContainer = styled.div`
 	background-color: white;
 	text-align: left;
 
-	padding: 4rem 1rem 4rem 1rem;
+	padding: 0 1rem 6rem 1rem;
 
 	z-index: 9999;
 
@@ -54,12 +54,17 @@ export const ExchangeRegistrationGuideContainer = styled.div`
 				#close-button {
 					padding: 0.5rem 1.5rem;
 					font-size: 1.75rem;
+					color: #000000;
 				}
 			}
 		}
 
-		h4 {
-			padding: 0.5rem 0.25rem;
+		#description-card {
+			margin-top: 4rem;
+
+			h4 {
+				padding: 0.5rem 0.25rem;
+			}
 		}
 
 		div#notion-page {

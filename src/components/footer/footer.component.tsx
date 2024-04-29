@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import PrivacyNotion from '../privacy-notion/privacy-notion.component'
+import NotionPage from '../notion-page/notion-page.component'
 
 import { FooterContainer } from './footer.styles'
 
@@ -10,8 +10,9 @@ export default function Footer() {
 	return (
 		<FooterContainer>
 			{isPrivacyClicked ? (
-				<PrivacyNotion
-					handleClick={() => {
+				<NotionPage
+					pageId="7a2143659bd94d36ada33edfc594f1ef"
+					handleCloseButtonClick={() => {
 						setIsPrivacyClicked(false)
 						window.scrollTo({ top: 0, behavior: 'auto' })
 					}}
