@@ -27,7 +27,7 @@ export default function UidInput() {
 		(state) => state.updateRequestStatus,
 	)
 
-	useForwardProgress()
+	useForwardProgress({ action: 'forwardProgress' })
 
 	const handleUidChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value

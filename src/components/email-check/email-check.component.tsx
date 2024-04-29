@@ -24,7 +24,7 @@ export default function EmailCheck() {
 		(state) => state.updateRequestStatus,
 	)
 
-	useForwardProgress()
+	useForwardProgress({ action: 'forwardProgress' })
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputEmail = e.target.value

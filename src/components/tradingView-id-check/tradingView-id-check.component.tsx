@@ -28,7 +28,7 @@ export default function TradingViewIdCheck() {
 		(state) => state.updateRequestStatus,
 	)
 
-	useForwardProgress()
+	useForwardProgress({ action: 'forwardProgress' })
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value

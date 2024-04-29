@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react'
 
 import { useUserDataStore, useExchangeDataStore } from '../../store/dataStore'
 import { useProgressStore } from '../../store/progressStore'
-import useDelayedUpdate from '../../hooks/useDelayedUpdate'
+import useForwardProgress from '../../hooks/useForwardProgress'
 import useSubmitForm from '../../hooks/useSubmitForm'
 
 import TextArea from '../text-area/text-area.component'
@@ -34,7 +34,10 @@ export default function ExchangeSelector() {
 		setIsValid(validtaeExchange)
 	}, [exchange])
 
-	useDelayedUpdate('afterSelection')
+	useForwardProgress({
+		action: 'updateExchangeSelectStep',
+		step: 'afterSelection',
+	})
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value

@@ -37,7 +37,7 @@ export default function AssetManagementSelector() {
 		setIsValid(validtaAssetManagement)
 	}, [assetManagement])
 
-	useForwardProgress()
+	useForwardProgress({ action: 'forwardProgress' })
 
 	const handleInputRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
