@@ -5,16 +5,16 @@
     {
       "src": "./app-logo.svg",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/svg"
+      "type": "image/svg+xml"
     },
     {
       "src": "./app-logo@2x.png",
       "type": "image/png",
-      "sizes": "192x192 180x180"
+      "sizes": "192x192 180x180 64x64 32x32 24x24 16x16"
     },
     {
       "src": "./app-logo.svg",
-      "type": "image/svg",
+      "type": "image/svg+xml",
       "sizes": "512x512"
     },
     {
