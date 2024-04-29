@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 
-import { useUserDataStore } from '../../store/dataStore'
+import { useUserDataStore, useAssetOptionsStore } from '../../store/dataStore'
 import { useProgressStore } from '../../store/progressStore'
 import useForwardProgress from '../../hooks/useForwardProgress'
 import useSubmitForm from '../../hooks/useSubmitForm'
@@ -18,18 +18,13 @@ import Toast from '../toast/toast.component'
 import { AssetManagementSelectorContainer } from './asset-management-selector.styles'
 
 export default function AssetManagementSelector() {
-	const optionList = [
-		{ title: '2,000만 원', value: '2000' },
-		{ title: '1,000만 원', value: '1000' },
-		{ title: '400만 원', value: '400' },
-		{ title: '100만 원', value: '100' },
-	]
 	const [isValid, setIsValid] = useState<boolean>(false)
 	const [formattedValue, setFormattedValue] = useState<string>('')
 	const [isCutsomInputValid, setIsCutsomInputValid] = useState<boolean>(false)
 
 	const email = useUserDataStore((state) => state.email)
 	const assetManagement = useUserDataStore((state) => state.assetManagement)
+	const optionList = useAssetOptionsStore((state) => state.optionList)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
 
 	const requestStatus = useProgressStore((state) => state.requestStatus)

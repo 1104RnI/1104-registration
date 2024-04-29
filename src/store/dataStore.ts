@@ -28,6 +28,15 @@ export interface ExchangeDataState {
 	exchangeList: Exchange[]
 }
 
+export type AssetOption = {
+	title: string
+	value: string
+}
+
+export interface AssetOptionState {
+	optionList: AssetOption[]
+}
+
 type UserDataAction = {
 	updateUserData: (field: string, value: string | boolean) => void
 	updatePersonalInfo: (field: string, value: string) => void
@@ -77,5 +86,14 @@ export const useExchangeDataStore = create<ExchangeDataState>((set) => ({
 		{ name: 'bitget', koName: '비트겟', referralCode: '', url: '' },
 		{ name: 'okx', koName: 'OKX', referralCode: '', url: '' },
 		{ name: 'others', koName: '그 외 다른 거래소', referralCode: '', url: '' },
+	],
+}))
+
+export const useAssetOptionsStore = create<AssetOptionState>((set) => ({
+	optionList: [
+		{ title: '2,000만 원', value: '2000' },
+		{ title: '1,000만 원', value: '1000' },
+		{ title: '400만 원', value: '400' },
+		{ title: '100만 원', value: '100' },
 	],
 }))
