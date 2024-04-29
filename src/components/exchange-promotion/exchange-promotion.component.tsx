@@ -1,5 +1,8 @@
 import { useProgressStore } from '../../store/progressStore'
 
+import Lottie from 'lottie-react'
+import shiningAnim from '../../assets/lottie/shiningAnim.json'
+
 import Card from '../card/card.component'
 import Button from '../button/button.component'
 
@@ -13,6 +16,12 @@ export default function ExchangePromotion() {
 
 	return (
 		<ExchangePromotionContainer>
+			<Lottie
+				animationData={shiningAnim}
+				loop={true}
+				id="lottie-shining-anim"
+			/>
+
 			<h1>
 				<span>잠깐만요!</span>
 				<br />

@@ -9,6 +9,18 @@ export const ExchangePromotionContainer = styled.div`
 
 	text-align: left;
 
+	#lottie-shining-anim {
+		position: absolute;
+		top: 2vh;
+		left: 50%;
+		transform: translate(-50%, 0);
+		width: 100%;
+		max-width: 30rem;
+		/* height: 100vh; */
+		opacity: 0.5;
+		z-index: -5;
+	}
+
 	h1 {
 		line-height: 120%;
 
