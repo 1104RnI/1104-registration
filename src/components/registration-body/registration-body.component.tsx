@@ -1,3 +1,5 @@
+import { motion, AnimatePresence } from 'framer-motion'
+
 import { useProgressStore, ProgressState } from '../../store/progressStore'
 
 import EmailCheck from '../email-check/email-check.component'
@@ -9,6 +11,31 @@ import UidInput from '../uid-input/uid-input.component'
 import TradingViewIdCheck from '../tradingView-id-check/tradingView-id-check.component'
 import AssetManagementSelector from '../asset-management-selector/asset-management-selector.component'
 
+interface ProgressComponentProps {
+	component: React.ComponentType
+	[key: string]: any
+}
+
+const ProgressComponent: React.FC<ProgressComponentProps> = ({
+	component: Component,
+	...props
+}) => {
+	const animationProps = {
+		initial: { opacity: 0 },
+		animate: { opacity: 1 },
+		exit: { opacity: 0 },
+		transition: { duration: 1 },
+	}
+
+	return (
+		<AnimatePresence>
+			<motion.div {...animationProps} style={{ width: '100%' }} {...props}>
+				<Component />
+			</motion.div>
+		</AnimatePresence>
+	)
+}
+
 export default function RegistrationBody() {
 	const progress = useProgressStore((state: ProgressState) => state.progress)
 	const exchangeSelectionStep = useProgressStore(
@@ -17,26 +44,56 @@ export default function RegistrationBody() {
 
 	switch (progress) {
 		case 1:
-			return <EmailCheck />
+			return <ProgressComponent key="emailCheck" component={EmailCheck} />
 		case 2:
-			return <PersonalInfoInputs />
+			return (
+				<ProgressComponent
+					key="personalInfoInputs"
+					component={PersonalInfoInputs}
+				/>
+			)
 		case 3:
 			switch (exchangeSelectionStep) {
 				case 'beforeSelection':
-					return <ExchangeSelector />
+					return (
+						<ProgressComponent
+							key="exchangeSelector"
+							component={ExchangeSelector}
+						/>
+					)
 				case 'afterSelection':
-					return <ExchangePromotion />
+					return (
+						<ProgressComponent
+							key="exchangePromotion"
+							component={ExchangePromotion}
+						/>
+					)
 				case 'benefitSelection':
-					return <BenefitSelector />
+					return (
+						<ProgressComponent
+							key="benefitSelector"
+							component={BenefitSelector}
+						/>
+					)
 				case 'uidInput':
-					return <UidInput />
+					return <ProgressComponent key="uidInput" component={UidInput} />
 				default:
 					return null
 			}
 		case 4:
-			return <TradingViewIdCheck />
+			return (
+				<ProgressComponent
+					key="tradingViewIdCheck"
+					component={TradingViewIdCheck}
+				/>
+			)
 		case 5:
-			return <AssetManagementSelector />
+			return (
+				<ProgressComponent
+					key="assetManagementSelector"
+					component={AssetManagementSelector}
+				/>
+			)
 		default:
 			return null
 	}
