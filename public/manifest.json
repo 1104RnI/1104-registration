@@ -3,6 +3,11 @@
   "name": "1104 R&I Registration",
   "icons": [
     {
+      "src": "favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
       "src": "./app-logo.svg",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/svg+xml"
