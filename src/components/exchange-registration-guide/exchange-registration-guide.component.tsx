@@ -5,7 +5,7 @@ import 'react-notion/src/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import { useUserDataStore } from '../../store/dataStore'
+import { useUserDataStore, useExchangeDataStore } from '../../store/dataStore'
 import { useProgressStore } from '../../store/progressStore'
 
 import Button from '../button/button.component'
@@ -23,7 +23,8 @@ export default function ExchangeRegistrationGuide(
 	const { handleClick } = props
 	const [response, setResponse] = useState<any>({})
 
-	const updateUerData = useUserDataStore((state) => state.updateUserData)
+	const defaultExchange = useExchangeDataStore((state) => state.defaultExchange)
+	const setUserData = useUserDataStore((state) => state.setUserData)
 
 	const updateExchangeSelectStep = useProgressStore(
 		(state) => state.updateExchangeSelectStep,
@@ -71,7 +72,11 @@ export default function ExchangeRegistrationGuide(
 						id="button"
 						handleClick={() => {
 							updateExchangeSelectStep('uidInput')
-							updateUerData('referral', true)
+							setUserData({
+								referral: true,
+								beginner: true,
+								exchange: defaultExchange,
+							})
 						}}
 					/>
 				</div>

@@ -25,6 +25,7 @@ export type Exchange = {
 }
 
 export interface ExchangeDataState {
+	defaultExchange: Exchange['name']
 	exchangeList: Exchange[]
 }
 
@@ -38,6 +39,7 @@ export interface AssetOptionState {
 }
 
 type UserDataAction = {
+	setUserData: (state: Partial<UserDataState>) => void
 	updateUserData: (field: string, value: string | boolean) => void
 	updatePersonalInfo: (field: string, value: string) => void
 	updatePersonalInfoBirth: (field: string, value: string) => void
@@ -53,6 +55,7 @@ export const useUserDataStore = create<UserDataState & UserDataAction>(
 		referral: false,
 		uid: '',
 		assetManagement: '',
+		setUserData: (state) => set((prevState) => ({ ...prevState, ...state })),
 		updateUserData: (field, value) =>
 			set((state) => ({
 				...state,
@@ -75,6 +78,7 @@ export const useUserDataStore = create<UserDataState & UserDataAction>(
 )
 
 export const useExchangeDataStore = create<ExchangeDataState>((set) => ({
+	defaultExchange: 'bybit',
 	exchangeList: [
 		{ name: 'binance', koName: '바이낸스', referralCode: '', url: '' },
 		{

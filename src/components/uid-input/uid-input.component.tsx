@@ -19,6 +19,7 @@ export default function UidInput() {
 	const email = useUserDataStore((state) => state.email)
 	const referral = useUserDataStore((state) => state.referral)
 	const uid = useUserDataStore((state) => state.uid)
+	const exchange = useUserDataStore((state) => state.exchange)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
 
 	const requestStatus = useProgressStore((state) => state.requestStatus)
@@ -38,7 +39,7 @@ export default function UidInput() {
 
 	const handleSubmit = useSubmitForm({
 		url: `${process.env.REACT_APP_MODIFY_URL}${email}`,
-		params: { isreferral: referral, uid: uid },
+		params: { isreferral: referral, uid: uid, exchange: exchange },
 		headers: { 'X-Requested-With': 'XMLHttpRequest' },
 		isValid: isValid,
 	})

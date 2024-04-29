@@ -8,7 +8,8 @@ import Button from '../button/button.component'
 import { BenefitSelectorContainer } from './benefit-selector.styles'
 
 export default function BenefitSelector() {
-	const updateUserDate = useUserDataStore((state) => state.updateUserData)
+	const setUserData = useUserDataStore((state) => state.setUserData)
+	const defaultExchange = useExchangeDataStore((state) => state.defaultExchange)
 	const exchangeList = useExchangeDataStore((state) => state.exchangeList)
 	const forwardProgress = useProgressStore((state) => state.forwardProgress)
 	const updateExchangeSelectStep = useProgressStore(
@@ -48,7 +49,10 @@ export default function BenefitSelector() {
 						text="해당 거래소로 신규가입 완료했어요"
 						handleClick={() => {
 							updateExchangeSelectStep('uidInput')
-							updateUserDate('referral', true)
+							setUserData({
+								referral: true,
+								exchange: defaultExchange,
+							})
 						}}
 					/>
 					<Button
