@@ -10,7 +10,7 @@
     {
       "src": "./app-logo@2x.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192 180x180"
     },
     {
       "src": "./app-logo.svg",
@@ -20,13 +20,8 @@
     {
       "src": "./mask-icon.svg",
       "sizes": "192x192",
-      "type": "image/svg",
+      "type": "image/svg+xml",
       "purpose": "maskable"
-    },
-    {
-      "src": "./app-logo@2x.png",
-      "sizes": "180x180",
-      "type": "image/png"
     }
   ],
   "start_url": ".",
