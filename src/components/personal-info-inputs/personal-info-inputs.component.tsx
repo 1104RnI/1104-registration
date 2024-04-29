@@ -1,8 +1,9 @@
-import { useState, ChangeEvent, FormEvent } from 'react'
-import axios from 'axios'
+import { useState, ChangeEvent } from 'react'
 
-import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
+import { useProgressStore } from '../../store/progressStore'
 import { useUserDataStore } from '../../store/dataStore'
+import useForwardProgress from '../../hooks/useForwardProgress'
+import useSubmitForm from '../../hooks/useSubmitForm'
 
 import Input from '../input/input.component'
 import BirthSelector from '../birth-selector/birth-selector.component'
@@ -34,9 +35,8 @@ export default function PersonalInfoInputs() {
 	const updateRequestStatus = useProgressStore(
 		(state) => state.updateRequestStatus,
 	)
-	const forwardProgress = useProgressStore(
-		(state: ProgressAtcion) => state.forwardProgress,
-	)
+
+	useForwardProgress()
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
@@ -105,42 +105,16 @@ export default function PersonalInfoInputs() {
 		} else return false
 	}
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		updateRequestStatus('idle')
-
-		if (isAllValid()) {
-			try {
-				updateRequestStatus('loading')
-
-				const response = await axios.get(
-					`${process.env.REACT_APP_MODIFY_URL}${email}`,
-					{
-						params: {
-							name: personalInfo.name,
-							callnum: personalInfo.tel,
-							birth: `${personalInfo.birth.year}-${personalInfo.birth.month}`,
-						},
-						headers: { 'X-Requested-With': 'XMLHttpRequest' },
-					},
-				)
-				if (response.status === 200) {
-					forwardProgress()
-				}
-				updateRequestStatus('success')
-			} catch (error) {
-				if (axios.isAxiosError(error)) {
-					updateRequestStatus('error')
-
-					if (error.response && error.response.status === 404) {
-						console.error(
-							'문제가 발생했습니다. 입력하신 개인 정보를 다시 한 번 확인해 주세요.',
-						)
-					} else console.error('Error checking email: ', error)
-				}
-			}
-		} else alert('Invalid Personal Info')
-	}
+	const handleSubmit = useSubmitForm({
+		url: `${process.env.REACT_APP_MODIFY_URL}${email}`,
+		params: {
+			name: personalInfo.name,
+			callnum: personalInfo.tel,
+			birth: `${personalInfo.birth.year}-${personalInfo.birth.month}`,
+		},
+		headers: { 'X-Requested-With': 'XMLHttpRequest' },
+		isValid: isAllValid(),
+	})
 
 	return (
 		<PersonalInfoInputsContainer onSubmit={handleSubmit}>

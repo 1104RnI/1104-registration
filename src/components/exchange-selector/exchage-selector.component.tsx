@@ -1,13 +1,16 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 
 import { useUserDataStore, useExchangeDataStore } from '../../store/dataStore'
 import { useProgressStore } from '../../store/progressStore'
+import useDelayedUpdate from '../../hooks/useDelayedUpdate'
+import useSubmitForm from '../../hooks/useSubmitForm'
 
 import TextArea from '../text-area/text-area.component'
 import Button from '../button/button.component'
 import RadioButton from '../radio-button/radio-button.component'
 import BeginnerButton from '../beginner-button/beginner-button.component'
 import ExchangeRegistrationGuide from '../exchange-registration-guide/exchange-registration-guide.component'
+import Toast from '../toast/toast.component'
 
 import { ExchangeSelectorContainer } from './exchange-selector.styles'
 
@@ -15,18 +18,23 @@ export default function ExchangeSelector() {
 	const [isValid, setIsValid] = useState<boolean>(false)
 	const [isGuideClicked, setIsGuideClicked] = useState<boolean>(false)
 
+	const email = useUserDataStore((state) => state.email)
 	const exchange = useUserDataStore((state) => state.exchange)
+	const beginner = useUserDataStore((state) => state.beginner)
 	const updateUserDate = useUserDataStore((state) => state.updateUserData)
 	const exchangeList = useExchangeDataStore((state) => state.exchangeList)
-	const updateExchangeSelectStep = useProgressStore(
-		(state) => state.updateExchangeSelectStep,
+
+	const requestStatus = useProgressStore((state) => state.requestStatus)
+	const updateRequestStatus = useProgressStore(
+		(state) => state.updateRequestStatus,
 	)
-	// const forwardProgress = useProgressStore((state) => state.forwardProgress)
 
 	useEffect(() => {
 		const validtaeExchange = (): boolean => exchange.length !== 0
 		setIsValid(validtaeExchange)
 	}, [exchange])
+
+	useDelayedUpdate('afterSelection')
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
@@ -35,16 +43,12 @@ export default function ExchangeSelector() {
 		updateUserDate(inputName, inputValue)
 	}
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-
-		if (isValid) {
-			// Server Communication comes here later
-			// ...
-			// ...
-			updateExchangeSelectStep('afterSelection')
-		} else alert('Invalid exchange info')
-	}
+	const handleSubmit = useSubmitForm({
+		url: `${process.env.REACT_APP_MODIFY_URL}${email}`,
+		params: { beginner: beginner, exchange: exchange },
+		headers: { 'X-Requested-With': 'XMLHttpRequest' },
+		isValid: isValid,
+	})
 
 	return (
 		<ExchangeSelectorContainer onSubmit={handleSubmit}>
@@ -89,6 +93,13 @@ export default function ExchangeSelector() {
 					disabled={!isValid}
 				/>
 			</div>
+			{requestStatus === 'error' ? (
+				<Toast
+					text="문제가 발생했습니다. 선택하신 거래소 정보를 다시 한 번 확인해 주세요."
+					duration={3000}
+					onClose={() => updateRequestStatus('idle')}
+				/>
+			) : null}
 		</ExchangeSelectorContainer>
 	)
 }

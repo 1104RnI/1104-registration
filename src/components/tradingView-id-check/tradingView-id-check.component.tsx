@@ -1,7 +1,9 @@
-import { useState, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent } from 'react'
 
-import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
+import { useProgressStore } from '../../store/progressStore'
 import { useUserDataStore } from '../../store/dataStore'
+import useForwardProgress from '../../hooks/useForwardProgress'
+import useSubmitForm from '../../hooks/useSubmitForm'
 
 import Input from '../input/input.component'
 import Button from '../button/button.component'
@@ -9,6 +11,7 @@ import TextArea from '../text-area/text-area.component'
 import WarningMessage from '../warning-message/warning-message.component'
 import BeginnerButton from '../beginner-button/beginner-button.component'
 import TradingViewRegistrationGuide from '../tradingView-registration-guide/tradingView-registration-guide.component'
+import Toast from '../toast/toast.component'
 
 import { TradingViewIdCheckContainer } from './tradingView-id-check.styles'
 
@@ -16,12 +19,16 @@ export default function TradingViewIdCheck() {
 	const [isValid, setIsValid] = useState<boolean>(false)
 	const [isGuideClicked, setIsGuideClicked] = useState<boolean>(false)
 
+	const email = useUserDataStore((state) => state.email)
 	const tradingViewId = useUserDataStore((state) => state.tradingViewId)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
 
-	const forwardProgress = useProgressStore(
-		(state: ProgressAtcion) => state.forwardProgress,
+	const requestStatus = useProgressStore((state) => state.requestStatus)
+	const updateRequestStatus = useProgressStore(
+		(state) => state.updateRequestStatus,
 	)
+
+	useForwardProgress()
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
@@ -36,16 +43,12 @@ export default function TradingViewIdCheck() {
 		return idRegex.test(value)
 	}
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-
-		if (isValid) {
-			// Server Communication comes here later
-			// ...
-			// ...
-			forwardProgress()
-		} else alert('Invalid TradingView ID')
-	}
+	const handleSubmit = useSubmitForm({
+		url: `${process.env.REACT_APP_MODIFY_URL}${email}`,
+		params: { tvusername: tradingViewId },
+		headers: { 'X-Requested-With': 'XMLHttpRequest' },
+		isValid: isValid,
+	})
 
 	return (
 		<TradingViewIdCheckContainer onSubmit={handleSubmit}>
@@ -95,6 +98,13 @@ export default function TradingViewIdCheck() {
 					disabled={!isValid}
 				/>
 			</label>
+			{requestStatus === 'error' ? (
+				<Toast
+					text="오류가 발생했습니다. 입력하신 트레이딩뷰 ID를 다시 확인해 주세요."
+					duration={3000}
+					onClose={() => updateRequestStatus('idle')}
+				/>
+			) : null}
 		</TradingViewIdCheckContainer>
 	)
 }

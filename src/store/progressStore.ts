@@ -5,8 +5,8 @@ export interface ResponseData {
 	returnMessage: string
 }
 
-type RequestStatus = 'idle' | 'loading' | 'success' | 'error'
-type ExchangeSelectStep =
+export type RequestStatus = 'idle' | 'loading' | 'success' | 'error'
+export type ExchangeSelectStep =
 	| 'beforeSelection'
 	| 'afterSelection'
 	| 'benefitSelection'

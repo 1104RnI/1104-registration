@@ -1,8 +1,9 @@
-import { useState, ChangeEvent, FormEvent } from 'react'
-import axios from 'axios'
+import { useState, ChangeEvent } from 'react'
 
 import { useUserDataStore } from '../../store/dataStore'
-import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
+import { useProgressStore } from '../../store/progressStore'
+import useForwardProgress from '../../hooks/useForwardProgress'
+import useSubmitForm from '../../hooks/useSubmitForm'
 
 import Input from '../input/input.component'
 import Button from '../button/button.component'
@@ -22,9 +23,8 @@ export default function EmailCheck() {
 	const updateRequestStatus = useProgressStore(
 		(state) => state.updateRequestStatus,
 	)
-	const forwardProgress = useProgressStore(
-		(state: ProgressAtcion) => state.forwardProgress,
-	)
+
+	useForwardProgress()
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputEmail = e.target.value
@@ -34,35 +34,14 @@ export default function EmailCheck() {
 		setIsValid(validateEmail(inputEmail))
 	}
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		updateRequestStatus('idle')
-
-		if (isValid) {
-			try {
-				updateRequestStatus('loading')
-
-				const response = await axios.get(process.env.REACT_APP_EMAILCHECK_URL, {
-					params: { email: email },
-					headers: { 'X-Requested-With': 'XMLHttpRequest' },
-				})
-				if (response.status === 200) {
-					forwardProgress()
-				}
-				updateRequestStatus('success')
-			} catch (error) {
-				if (axios.isAxiosError(error)) {
-					updateRequestStatus('error')
-
-					if (error.response && error.response.status === 404) {
-						console.error(
-							'등록되지 않은 이메일 입니다. 이메일을 다시 확인해 주세요.',
-						)
-					} else console.error('Error checking email: ', error)
-				}
-			}
-		} else alert('Invalid Email Text')
-	}
+	const handleSubmit = useSubmitForm({
+		url: process.env.REACT_APP_EMAILCHECK_URL,
+		params: {
+			email: email,
+		},
+		headers: { 'X-Requested-With': 'XMLHttpRequest' },
+		isValid: isValid,
+	})
 
 	const validateEmail = (email: string): boolean => {
 		const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/

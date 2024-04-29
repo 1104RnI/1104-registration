@@ -1,30 +1,32 @@
-import { useState, ChangeEvent, FormEvent } from 'react'
-// import axios from 'axios'
+import { useState, ChangeEvent } from 'react'
 
 import { useUserDataStore } from '../../store/dataStore'
-import { useProgressStore, ProgressAtcion } from '../../store/progressStore'
+import { useProgressStore } from '../../store/progressStore'
+import useForwardProgress from '../../hooks/useForwardProgress'
+import useSubmitForm from '../../hooks/useSubmitForm'
 
 import TextArea from '../text-area/text-area.component'
 import Input from '../input/input.component'
 import Button from '../button/button.component'
 import WarningMessage from '../warning-message/warning-message.component'
-// import Toast from '../toast/toast.component'
+import Toast from '../toast/toast.component'
 
 import { UidInputContainer } from './uid-input.styles'
 
 export default function UidInput() {
 	const [isValid, setIsValid] = useState<boolean>(false)
 
+	const email = useUserDataStore((state) => state.email)
+	const referral = useUserDataStore((state) => state.referral)
 	const uid = useUserDataStore((state) => state.uid)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
 
-	// const requestStatus = useProgressStore((state) => state.requestStatus)
-	// const updateRequestStatus = useProgressStore(
-	// 	(state) => state.updateRequestStatus,
-	// )
-	const forwardProgress = useProgressStore(
-		(state: ProgressAtcion) => state.forwardProgress,
+	const requestStatus = useProgressStore((state) => state.requestStatus)
+	const updateRequestStatus = useProgressStore(
+		(state) => state.updateRequestStatus,
 	)
+
+	useForwardProgress()
 
 	const handleUidChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
@@ -34,35 +36,12 @@ export default function UidInput() {
 		setIsValid(validateUid(inputValue))
 	}
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		// updateRequestStatus('idle')
-
-		if (isValid) {
-			// try {
-			// 	updateRequestStatus('loading')
-
-			// 	const response = await axios.get(process.env.REACT_APP_EMAILCHECK_URL, {
-			//     params: { uid: uid },
-			// 		headers: { 'X-Requested-With': 'XMLHttpRequest' },
-			// 	})
-			// 	if (response.status === 200) {
-			forwardProgress()
-			// 	}
-			// 	updateRequestStatus('success')
-			// } catch (error) {
-			// 	if (axios.isAxiosError(error)) {
-			// 		updateRequestStatus('error')
-
-			// 		if (error.response && error.response.status === 404) {
-			// 			console.error(
-			// 				'UID를 다시 확인해 주세요.',
-			// 			)
-			// 		} else console.error('Error checking uid: ', error)
-			// 	}
-			// }
-		} else alert('Invalid UID Text')
-	}
+	const handleSubmit = useSubmitForm({
+		url: `${process.env.REACT_APP_MODIFY_URL}${email}`,
+		params: { isreferral: referral, uid: uid },
+		headers: { 'X-Requested-With': 'XMLHttpRequest' },
+		isValid: isValid,
+	})
 
 	const validateUid = (uid: string): boolean => {
 		const uidRegex = /^\d+$/
@@ -100,13 +79,13 @@ export default function UidInput() {
 					disabled={!isValid}
 				/>
 			</label>
-			{/* {requestStatus === 'error' ? (
+			{requestStatus === 'error' ? (
 				<Toast
-					text="오류가 발생했습니다. UID를 다시 확인해 주세요."
+					text="오류가 발생했습니다. 입력하신 UID를 다시 확인해 주세요."
 					duration={3000}
 					onClose={() => updateRequestStatus('idle')}
 				/>
-			) : null} */}
+			) : null}
 		</UidInputContainer>
 	)
 }

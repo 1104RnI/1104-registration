@@ -12,7 +12,7 @@ export interface UserDataState {
 	tradingViewId: string
 	beginner: boolean
 	exchange: string
-	referral: string
+	referral: boolean
 	uid: string
 	assetManagement: string
 }
@@ -29,7 +29,7 @@ export interface ExchangeDataState {
 }
 
 type UserDataAction = {
-	updateUserData: (field: string, value: string) => void
+	updateUserData: (field: string, value: string | boolean) => void
 	updatePersonalInfo: (field: string, value: string) => void
 	updatePersonalInfoBirth: (field: string, value: string) => void
 }
@@ -41,11 +41,14 @@ export const useUserDataStore = create<UserDataState & UserDataAction>(
 		tradingViewId: '',
 		beginner: false,
 		exchange: '',
-		referral: '',
+		referral: false,
 		uid: '',
 		assetManagement: '',
 		updateUserData: (field, value) =>
-			set((state) => ({ ...state, [field]: value })),
+			set((state) => ({
+				...state,
+				[field]: value,
+			})),
 		updatePersonalInfo: (field, value) =>
 			set((state) => ({
 				...state,

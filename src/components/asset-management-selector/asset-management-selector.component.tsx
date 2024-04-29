@@ -1,7 +1,9 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 
 import { useUserDataStore } from '../../store/dataStore'
 import { useProgressStore } from '../../store/progressStore'
+import useForwardProgress from '../../hooks/useForwardProgress'
+import useSubmitForm from '../../hooks/useSubmitForm'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
@@ -11,6 +13,7 @@ import Button from '../button/button.component'
 import Input from '../input/input.component'
 import RadioButton from '../radio-button/radio-button.component'
 import WarningMessage from '../warning-message/warning-message.component'
+import Toast from '../toast/toast.component'
 
 import { AssetManagementSelectorContainer } from './asset-management-selector.styles'
 
@@ -25,14 +28,21 @@ export default function AssetManagementSelector() {
 	const [formattedValue, setFormattedValue] = useState<string>('')
 	const [isCutsomInputValid, setIsCutsomInputValid] = useState<boolean>(false)
 
+	const email = useUserDataStore((state) => state.email)
 	const assetManagement = useUserDataStore((state) => state.assetManagement)
 	const updateUserData = useUserDataStore((state) => state.updateUserData)
-	const forwardProgress = useProgressStore((state) => state.forwardProgress)
+
+	const requestStatus = useProgressStore((state) => state.requestStatus)
+	const updateRequestStatus = useProgressStore(
+		(state) => state.updateRequestStatus,
+	)
 
 	useEffect(() => {
 		const validtaAssetManagement = (): boolean => assetManagement.length !== 0
 		setIsValid(validtaAssetManagement)
 	}, [assetManagement])
+
+	useForwardProgress()
 
 	const handleInputRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value
@@ -93,17 +103,12 @@ export default function AssetManagementSelector() {
 		updateCursorPosition(inputElement, formattedValue.length)
 	}
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-
-		if (isValid) {
-			// Server Communication comes here later
-			// ...
-			// ...
-
-			forwardProgress()
-		} else alert('Invalid asset management info')
-	}
+	const handleSubmit = useSubmitForm({
+		url: `${process.env.REACT_APP_MODIFY_URL}${email}`,
+		params: { assetplan: assetManagement },
+		headers: { 'X-Requested-With': 'XMLHttpRequest' },
+		isValid: isValid,
+	})
 
 	return (
 		<AssetManagementSelectorContainer onSubmit={handleSubmit}>
@@ -149,6 +154,13 @@ export default function AssetManagementSelector() {
 					disabled={!isValid}
 				/>
 			</div>
+			{requestStatus === 'error' ? (
+				<Toast
+					text="문제가 발생했습니다. 입력, 또는 선택하신 자산설계 정보를 다시 한 번 확인해 주세요."
+					duration={3000}
+					onClose={() => updateRequestStatus('idle')}
+				/>
+			) : null}
 		</AssetManagementSelectorContainer>
 	)
 }
