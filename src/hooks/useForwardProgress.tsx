@@ -6,17 +6,18 @@ const useForwardProgress = (delay: number = 1500) => {
 	const forwardProgress = useProgressStore((state) => state.forwardProgress)
 
 	useEffect(() => {
-		console.log(1)
-		if (requestStatus === 'success') {
-			console.log(2)
-			// const timeoutId = setTimeout(() => {
-			// 	console.log(3)
-			forwardProgress()
-			// }, delay)
+		let timeoutId: NodeJS.Timeout | null = null
 
-			// return () => {
-			// 	clearTimeout(timeoutId)
-			// }
+		if (requestStatus === 'success') {
+			timeoutId = setTimeout(() => {
+				forwardProgress()
+			}, delay)
+		}
+
+		return () => {
+			if (timeoutId) {
+				clearTimeout(timeoutId)
+			}
 		}
 	}, [requestStatus, forwardProgress, delay])
 }
