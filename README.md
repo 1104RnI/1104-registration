@@ -1,46 +1,102 @@
-# Getting Started with Create React App
+# 1104-registration
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1104-registration은 https://1104.kr 사이트의 회원가입 시 추가 정보를 입력받기 위한 싱글 페이지 웹 애플리케이션입니다. 회원가입 절차의 일부로 사용자로부터 필요한 부가 정보를 수집하고, 서버로 전송하는 기능을 제공합니다.
 
-## Available Scripts
+1104-registration is a single-page web application for collecting additional information from users during the registration process on the https://1104.kr website. As part of the registration procedure, it collects necessary supplementary information from users and sends it to the server.
 
-In the project directory, you can run:
+## 주요 기능 (Key Features)
 
-### `yarn start`
+- 사용자 추가 정보 입력 폼 (User additional information input form)
+- 입력 정보 유효성 검사 (Input data validation)
+- 사용자 정보 서버로 전송 (Sending user information to the server)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 실행 화면 (Demo Screen)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+(스크린샷 또는 데모 영상 링크) (Screenshot or demo video link)
 
-### `yarn test`
+## 설치 및 실행 방법 (Installation and Execution)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. 레포지토리 클론 (Clone the repository)
 
-### `yarn build`
+```
+git clone https://github.com/1104RnI/1104-registration.git
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. 패키지 설치 (Install packages)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+cd 1104-registration
+yarn install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. 프로젝트 실행 (Run the project)
 
-### `yarn eject`
+```
+yarn start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 사용 기술 및 프레임워크 (Technologies and Frameworks Used)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- TypeScript
+- React
+- Zustand (상태 관리) (State management)
+- Axios (서버 통신) (Server communication)
+- Framer Motion (애니메이션) (Animation)
+- Styled Components (스타일링) (Styling)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 파일 구조 (File Structure)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+1104-registration/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── hooks/
+│   ├── store/
+│   └── App.tsx
+└── README.md
+```
 
-## Learn More
+## 테스트 및 빌드 방법 (Testing and Building)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- 테스트 실행 (Run tests)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+yarn test
+```
+
+- 프로덕션 빌드 생성 (Create a production build)
+
+```
+yarn build
+```
+
+## 서버 통신 (Server Communication)
+
+- 사용자가 입력한 정보는 Axios를 통해 서버 API로 전송됩니다. (User-entered information is sent to the server API via Axios.)
+- 서버 응답에 따라 적절한 처리를 수행합니다. (Appropriate processing is performed according to the server response.)
+
+## 라이선스 (License)
+
+Copyright (c) 2024 1104 R&I. All rights reserved.
+
+본 프로젝트에는 다음의 오픈 소스 라이브러리가 사용되었습니다:
+(The following open source libraries were used in this project:)
+
+- React (MIT 라이선스) (MIT License) - https://github.com/facebook/react/blob/main/LICENSE
+- Axios (MIT 라이선스) (MIT License) - https://github.com/axios/axios/blob/master/LICENSE
+- Framer Motion (MIT 라이선스) (MIT License) - https://github.com/framer/motion/blob/main/LICENSE.md
+- Lottie React (MIT 라이선스) (MIT License) - https://github.com/airbnb/lottie-react/blob/master/LICENSE
+- Styled Components (MIT 라이선스) (MIT License) - https://github.com/styled-components/styled-components/blob/main/LICENSE
+- Zustand (MIT 라이선스) (MIT License) - https://github.com/pmndrs/zustand/blob/main/LICENSE
+- Font Awesome Free (Font Awesome Free 라이선스) (Font Awesome Free License) - https://fontawesome.com/license/free
+
+사용된 라이브러리의 라이선스 조건을 준수하며, 해당 라이브러리의 라이선스 및 저작권 고지는 프로젝트의 소스 코드 및 배포물에 포함되어 있습니다.
+(The license terms of the used libraries are complied with, and the license and copyright notices of those libraries are included in the project's source code and distributions.)
+
+## 개발자 정보 (Developer Information)
+
+- 개발자 (Developer): 1104 R&I
+- 이메일 (Email): 1104.biz.kr@5010.tech
+- 깃허브 (GitHub): https://github.com/1104RnI
