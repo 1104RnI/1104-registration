@@ -4,15 +4,15 @@
 
 1104-registration is a single-page web application for collecting additional information from users during the registration process on the https://1104.kr website. As part of the registration procedure, it collects necessary supplementary information from users and sends it to the server.
 
+<a href="https://1104-registration.netlify.app" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: transparent; border: 1px solid #333333; border-radius: 4px; text-decoration: none; color: #a9a9a9;">
+  ColorBox
+</a>
+
 ## 주요 기능 (Key Features)
 
 - 사용자 추가 정보 입력 폼 (User additional information input form)
 - 입력 정보 유효성 검사 (Input data validation)
 - 사용자 정보 서버로 전송 (Sending user information to the server)
-
-## 실행 화면 (Demo Screen)
-
-(스크린샷 또는 데모 영상 링크) (Screenshot or demo video link)
 
 ## 설치 및 실행 방법 (Installation and Execution)
 
@@ -97,6 +97,9 @@ Copyright (c) 2024 1104 R&I. All rights reserved.
 
 ## 개발자 정보 (Developer Information)
 
-- 개발자 (Developer): 1104 R&I
+- 회사명 (Company Name): 1104 R&I
 - 이메일 (Email): 1104.biz.kr@5010.tech
-- 깃허브 (GitHub): https://github.com/1104RnI
+- 웹사이트 (Website): https://1104.kr
+- 기여자 (Contributors):
+  - ED (ed@5010.tech)
+  - Jaden (jaden@5010.tech)
