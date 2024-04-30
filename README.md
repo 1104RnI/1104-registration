@@ -11,6 +11,8 @@ The currently deployed version can be accessed via the following link.
 
 [1104-registration 배포 버전 (Deployed Ver.)](https://1104-registration.netlify.app)
 
+---
+
 ## 주요 기능 (Key Features)
 
 - 사용자 추가 정보 입력 폼 (User additional information input form)
@@ -79,6 +81,8 @@ yarn build
 
 - 사용자가 입력한 정보는 Axios를 통해 서버 API로 전송됩니다. (User-entered information is sent to the server API via Axios.)
 - 서버 응답에 따라 적절한 처리를 수행합니다. (Appropriate processing is performed according to the server response.)
+
+---
 
 ## 라이선스 (License)
 
