@@ -7,6 +7,7 @@
 ## 배포 버전 (Deployed Version)
 
 현재 배포 중인 버전은 다음 링크에서 확인할 수 있습니다.
+
 The currently deployed version can be accessed via the following link.
 
 [1104-registration 배포 버전 (Deployed Ver.)](https://1104-registration.netlify.app)
@@ -88,8 +89,9 @@ yarn build
 
 Copyright (c) 2024 1104 R&I. All rights reserved.
 
-본 프로젝트에는 다음의 오픈 소스 라이브러리가 사용되었습니다:
-(The following open source libraries were used in this project:)
+본 프로젝트에는 다음의 오픈 소스 라이브러리가 사용되었습니다.
+
+The following open source libraries were used in this project.
 
 - React (MIT 라이선스) (MIT License) - https://github.com/facebook/react/blob/main/LICENSE
 - Axios (MIT 라이선스) (MIT License) - https://github.com/axios/axios/blob/master/LICENSE
@@ -100,7 +102,8 @@ Copyright (c) 2024 1104 R&I. All rights reserved.
 - Font Awesome Free (Font Awesome Free 라이선스) (Font Awesome Free License) - https://fontawesome.com/license/free
 
 사용된 라이브러리의 라이선스 조건을 준수하며, 해당 라이브러리의 라이선스 및 저작권 고지는 프로젝트의 소스 코드 및 배포물에 포함되어 있습니다.
-(The license terms of the used libraries are complied with, and the license and copyright notices of those libraries are included in the project's source code and distributions.)
+
+The license terms of the used libraries are complied with, and the license and copyright notices of those libraries are included in the project's source code and distributions.
 
 ## 개발자 정보 (Developer Information)
 
@@ -108,5 +111,5 @@ Copyright (c) 2024 1104 R&I. All rights reserved.
 - 이메일 (Email): 1104.biz.kr@5010.tech
 - 웹사이트 (Website): https://1104.kr
 - 기여자 (Contributors):
-  - ED (ed@5010.tech)
-  - Jaden (jaden@5010.tech)
+  - [ED](https://github.com/weirdry) (ed@5010.tech)
+  - [Jaden](https://github.com/JunHyeok-Navy) (jaden@5010.tech)
